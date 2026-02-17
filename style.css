@@ -20,8 +20,19 @@ body {
 	flex-direction: column;
 	background-color: #d4d4d6;
 	margin: 0;
-	margin-top: 120px;
 	padding: 0;
+	padding-top: 120px;
+}
+
+.background-image {
+	position: fixed;
+	top: -200px;
+	left: -20px;
+	width: 100%;
+	object-fit: cover;
+	opacity: 1;
+	z-index: -1;
+	filter: blur(10px) contrast(0.6);
 }
 
 /* Header */
@@ -65,7 +76,7 @@ body {
 	height: 40px;
 	border: none;
 	border-radius: 14px;
-	background-color: #4caba3;
+	background-color: #285e59;
 	cursor: pointer;
 	transition: all 0.3s ease;
 
@@ -106,14 +117,14 @@ body {
 
 		&:hover {
 			> span {
-				color: #4caba3;
+				color: #285e59;
 			}
 		}
 	}
 }
 .nav-ul-li-active {
 	> button {
-		border-bottom: 2px solid #4caba3;
+		border-bottom: 2px solid #285e59;
 	}
 }
 
@@ -262,7 +273,7 @@ body {
 
 			> span {
 				margin-left: 10px;
-				color: #4caba3;
+				color: #285e59;
 			}
 		}
 	}
@@ -340,7 +351,7 @@ body {
 					align-items: center;
 					font-size: 16px;
 					margin: 0;
-					color: #4caba3;
+					color: #285e59;
 					font-weight: bold;
 
 					> span {
@@ -359,8 +370,21 @@ body {
 	}
 }
 
+/* График */
+.main-chart-container {
+	> h3 {
+		margin: 0;
+		color: #262626;
+	}
+}
+
 @supports not (hanging-punctuation: first) {
 	.header-liquid-fill {
+		backdrop-filter: url(#displacementFilter) blur(2px);
+		-webkit-backdrop-filter: url(#displacementFilter) blur(2px);
+	}
+
+	.main-container {
 		backdrop-filter: url(#displacementFilter) blur(2px);
 		-webkit-backdrop-filter: url(#displacementFilter) blur(2px);
 	}
