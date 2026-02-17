@@ -76,17 +76,20 @@ body {
 	height: 40px;
 	border: none;
 	border-radius: 14px;
-	background-color: #285e59;
+	background: rgba(255, 255, 255, 0.12);
+	backdrop-filter: blur(4px) brightness(1.05);
+	-webkit-backdrop-filter: blur(4px) brightness(1.05);
+	border: 1px solid rgba(116, 116, 116, 0.2);
 	cursor: pointer;
 	transition: all 0.3s ease;
 
 	> span {
 		font-size: 24px;
-		color: #fff;
+		color: #000000;
 	}
 }
 .header-account:hover {
-	background-color: #3b8c7e;
+	background-color: #fff;
 }
 
 /* nav */
@@ -133,9 +136,7 @@ body {
 	margin-top: 20px;
 	width: 1400px;
 	display: flex;
-	flex-direction: row;
-	align-items: flex-start;
-	justify-content: space-between;
+	justify-content: center;
 
 	> h2 {
 		display: none;
@@ -238,7 +239,6 @@ body {
 			backdrop-filter: blur(4px) brightness(1.05);
 			-webkit-backdrop-filter: blur(4px) brightness(1.05);
 			border: 1px solid rgba(255, 255, 255, 0.2);
-			box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
 
 			> svg {
 				width: 30px;
@@ -377,11 +377,203 @@ body {
 	}
 }
 
+.main-ul-li-2 {
+	width: 440px;
+}
 /* График */
 .main-chart-container {
 	> h3 {
 		margin: 0;
 		color: #262626;
+	}
+}
+
+/* Советы */
+.main-tips-container {
+	> ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		margin-top: 10px;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+
+		> li {
+			padding: 10px;
+			border-radius: 16px;
+			background: rgba(255, 255, 255, 0.12);
+			backdrop-filter: blur(4px) brightness(1.05);
+			-webkit-backdrop-filter: blur(4px) brightness(1.05);
+			border: 1px solid rgba(255, 255, 255, 0.2);
+
+			> p {
+				margin: 0;
+				margin-left: 5px;
+				font-size: 16px;
+				color: #262626;
+				font-weight: bold;
+
+				> span {
+					color: #262626;
+				}
+			}
+		}
+	}
+	> h3 {
+		margin: 0;
+		color: #262626;
+	}
+}
+
+.main-ul-li-3 {
+	width: 380px;
+}
+/* Цели */
+.main-goals-container {
+	gap: 10px;
+
+	> p {
+		font-size: 16px;
+		color: #989ba1;
+		font-weight: bold;
+	}
+
+	> ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+
+		> li {
+			padding: 10px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			border-radius: 14px;
+			background: rgba(255, 255, 255, 0.12);
+			backdrop-filter: blur(4px) brightness(1.05);
+			-webkit-backdrop-filter: blur(4px) brightness(1.05);
+			border: 1px solid rgba(116, 116, 116, 0.2);
+			cursor: pointer;
+			transition: all 0.3s ease;
+			color: #000000;
+			font-size: 16px;
+			font-weight: bold;
+
+			> h4 {
+				margin: 0;
+			}
+
+			> button {
+				padding: 5px;
+				border: none;
+				border-radius: 8px;
+				background: rgba(255, 255, 255, 0.12);
+				backdrop-filter: blur(4px) brightness(1.05);
+				-webkit-backdrop-filter: blur(4px) brightness(1.05);
+				border: 1px solid rgba(116, 116, 116, 0.2);
+				box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+				cursor: pointer;
+				transition: all 0.3s ease;
+				color: #000000;
+				font-size: 16px;
+				font-weight: bold;
+				transition: all 0.3s ease;
+
+				&:hover {
+					background-color: #ffffff;
+				}
+			}
+		}
+	}
+}
+.main-goal-add-button {
+	padding: 8px;
+	border: none;
+	border-radius: 14px;
+	background: rgba(255, 255, 255, 0.12);
+	backdrop-filter: blur(4px) brightness(1.05);
+	-webkit-backdrop-filter: blur(4px) brightness(1.05);
+	border: 1px solid rgba(116, 116, 116, 0.2);
+	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
+	transition: all 0.3s ease;
+	color: #000000;
+	font-size: 16px;
+	font-weight: bold;
+	transition: all 0.3s ease;
+
+	&:hover {
+		background-color: #ffffff;
+	}
+}
+
+/* Категории */
+.main-categories-container {
+	> h3 {
+		margin: 0;
+		color: #262626;
+	}
+
+	> ul {
+		list-style: none;
+		width: 100%;
+		padding: 0;
+		margin: 0;
+		margin-top: 20px;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+
+		> li {
+			margin: 0;
+			padding: 0;
+			display: flex;
+			flex-direction: column;
+			padding-bottom: 10px;
+			border-bottom: 2px solid #26262611;
+
+			> div {
+				display: flex;
+				align-items: flex-end;
+				justify-content: space-between;
+
+				> div {
+					display: flex;
+					align-items: flex-end;
+
+					> svg {
+						width: 25px;
+						height: 25px;
+					}
+
+					> p {
+						font-size: 16px;
+						margin: 0;
+						margin-left: 5px;
+						color: #262626;
+						font-weight: bold;
+					}
+				}
+
+				> p {
+					display: flex;
+					align-items: center;
+					font-size: 16px;
+					margin: 0;
+					color: #285e59;
+					font-weight: bold;
+				}
+			}
+		}
+
+		> li:last-child {
+			border-bottom: none;
+			padding: 0;
+		}
 	}
 }
 
@@ -395,6 +587,10 @@ body {
 		-webkit-backdrop-filter: url(#displacementFilter) blur(2px);
 	}
 	.main-button {
+		backdrop-filter: url(#displacementFilter) blur(2px);
+		-webkit-backdrop-filter: url(#displacementFilter) blur(2px);
+	}
+	.header-account {
 		backdrop-filter: url(#displacementFilter) blur(2px);
 		-webkit-backdrop-filter: url(#displacementFilter) blur(2px);
 	}
