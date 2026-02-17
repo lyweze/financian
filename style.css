@@ -150,15 +150,18 @@ body {
 	border: none;
 	border-radius: 16px;
 	cursor: pointer;
-	background-color: #3b8c7e;
-	color: #fff;
+	color: #000000;
 	font-size: 24px;
 	font-weight: bold;
 	transition: all 0.3s ease;
-	box-shadow: 0px 0px 20px 10px rgb(0, 0, 0, 0.1);
+	background: rgba(255, 255, 255, 0.12);
+	backdrop-filter: blur(4px) brightness(1.05);
+	-webkit-backdrop-filter: blur(4px) brightness(1.05);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	box-shadow: 0px 0px 20px 10px rgba(0, 0, 0, 0.1);
 
 	&:hover {
-		background-color: #2a5f52;
+		background-color: #ffffff;
 	}
 }
 .main-ul {
@@ -383,8 +386,11 @@ body {
 		backdrop-filter: url(#displacementFilter) blur(2px);
 		-webkit-backdrop-filter: url(#displacementFilter) blur(2px);
 	}
-
 	.main-container {
+		backdrop-filter: url(#displacementFilter) blur(2px);
+		-webkit-backdrop-filter: url(#displacementFilter) blur(2px);
+	}
+	.main-button {
 		backdrop-filter: url(#displacementFilter) blur(2px);
 		-webkit-backdrop-filter: url(#displacementFilter) blur(2px);
 	}
