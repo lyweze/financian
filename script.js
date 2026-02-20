@@ -5,14 +5,12 @@ const setVisibility = (el, visible) => {
 	if (!el) return;
 	el.style.opacity = visible ? "1" : "0";
 	el.style.zIndex = visible ? "1004" : "-1";
-	// document.body.style.overflowY = visible ? "hidden" : "scroll";
 	document.body.style.position = visible ? "fixed" : "static";
 	if (!visible) setTimeout(() => (el.style.zIndex = "-1"), 300);
 };
 
 // DOM-элементы
 const els = {
-	headerLogo: qs(".header-logo"),
 	addArticle: qs(".add-article"),
 	mainButton: qs(".main-button"),
 	closeButton: qs(".article-close-button"),
@@ -21,13 +19,14 @@ const els = {
 	lastOperationsCollapse: qs(".main-last-operation-collapse-button"),
 	lastOperationsContainer: qs(".main-last-operations-container"),
 	lastOperationsList: qs(".main-last-operations-ul-collapsed"),
+	headerLogo: qs(".header-logo"),
 };
 
 // Данные
 const allOperations = [
 	{ id: 1, category: "food", date: "01-01", amount: 900.0 },
 	{ id: 2, category: "clothing", date: "01-04", amount: 120.0 },
-	{ id: 3, category: "transport", date: "01-04", amount: 1200000.0 },
+	{ id: 3, category: "transport", date: "01-04", amount: 1_200_000.0 },
 	{ id: 4, category: "online", date: "01-04", amount: 120.0 },
 	{ id: 5, category: "other", date: "01-04", amount: 120.0 },
 	{ id: 6, category: "food", date: "02-10", amount: 560.5 },
@@ -57,9 +56,15 @@ const operationsCategories = {
 // Состояния
 let isModalOpen = false;
 let isCollapsed = true;
+let isSortedByDate = false;
 
 // Рендеры
 const renderOperations = () => {
+	if (!isSortedByDate) {
+		allOperations.sort((a, b) => new Date(b.date) - new Date(a.date));
+		isSortedByDate = true;
+	}
+
 	const { lastOperationsList } = els;
 	if (!lastOperationsList) return;
 
@@ -102,6 +107,21 @@ const renderCategoriesTotals = () => {
 			</div>`;
 		categoriesList.appendChild(li);
 	});
+};
+
+const renderOverviewTotals = () => {
+	const wastesEl = qs(".main-overview-wastes");
+	const incomeEl = qs(".main-overview-income");
+	const remainderEl = qs(".main-overview-remainder");
+
+	const totalExpenses = allOperations.reduce(
+		(sum, { amount }) => sum + amount,
+		0,
+	);
+
+	if (wastesEl) wastesEl.textContent = `${totalExpenses.toFixed(2)} ₽`;
+	if (incomeEl) incomeEl.textContent = "нет";
+	if (remainderEl) remainderEl.textContent = "пусто(";
 };
 
 // Логика
@@ -151,29 +171,120 @@ const toggleCollapse = () => {
 	if (isCollapsed) {
 		window.scrollTo({ top: 0, behavior: "smooth" });
 	} else {
-		setTimeout(() => {
-			window.scrollTo({
-				top: lastOperationsContainer.offsetTop + 20,
-				behavior: "smooth",
-			});
-		}, 300);
+		setTimeout(
+			() =>
+				window.scrollTo({
+					top: lastOperationsCollapse.offsetTop,
+					behavior: "smooth",
+				}),
+			300,
+		);
 	}
+};
+
+const addOperation = () => {
+	const categoryInput = qs(".article-category-input")?.value;
+	const amountInput = qs(".article-amount-input")?.value;
+	let dateInput = qs(".article-date-input-valid")?.dataset.raw;
+	dateInput = dateInput ? dateInput.replace(/(\d{2})(\d{2})/, "$1-$2") : null;
+
+	if (!categoryInput || !amountInput || !dateInput) return;
+
+	allOperations.unshift({
+		id: allOperations.length + 1,
+		category: categoryInput,
+		amount: parseFloat(amountInput),
+		date: dateInput,
+	});
+	isSortedByDate = false;
+
+	renderOperations();
+	renderCategoriesTotals();
+	renderOverviewTotals();
+	toggleModal();
 };
 
 // Инициализация
 const init = () => {
 	renderOperations();
 	renderCategoriesTotals();
+	renderOverviewTotals();
 
 	bindClick(els.headerLogo, navigateHome);
 	bindClick(els.mainButton, toggleModal);
-	bindClick(els.addButton, toggleModal);
 	bindClick(els.closeButton, toggleModal);
 	bindClick(
 		els.addArticle,
 		(e) => e.target === els.addArticle && toggleModal(),
 	);
 	bindClick(els.lastOperationsCollapse, toggleCollapse);
+	bindClick(els.addButton, addOperation);
 };
 
 init();
+
+const dateInput = qs(".article-date-input-valid");
+const dateInputError = qs(".article-date-error");
+
+const isValidDayMonth = (dd, mm) => {
+	if (!(mm >= 1 && mm <= 12)) return false;
+	const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+	let max = daysInMonth[mm - 1];
+	if (mm === 2) max = 29;
+	return dd >= 1 && dd <= max;
+};
+
+const formatDM = (value) => {
+	const raw = value.replace(/\D/g, "").slice(0, 4);
+	const dd = raw.slice(0, 2);
+	const mm = raw.slice(2, 4);
+	let formatted = dd;
+	if (raw.length > 2) formatted += "." + mm;
+	return { raw, dd, mm, formatted };
+};
+
+if (dateInput && dateInputError) {
+	dateInput.addEventListener("input", () => {
+		const { raw, dd, mm, formatted } = formatDM(dateInput.value);
+
+		dateInput.value = formatted;
+		dateInput.dataset.raw = raw;
+
+		if (raw.length < 4) {
+			dateInput.setCustomValidity("");
+			dateInputError.classList.remove("article-date-error-visible");
+			dateInputError.classList.add("article-date-error");
+			return;
+		}
+
+		const d = Number(dd);
+		const m = Number(mm);
+
+		if (!isValidDayMonth(d, m)) {
+			dateInput.setCustomValidity("Неверная дата");
+			dateInput.classList.remove("article-date-input-valid");
+			dateInput.classList.add("article-date-input-error");
+			dateInputError.classList.remove("article-date-error");
+			dateInputError.classList.add("article-date-error-visible");
+			dateInput.style.animation = "shake 0.3s";
+			setTimeout(() => (dateInput.style.animation = ""), 300);
+		} else {
+			dateInput.setCustomValidity("");
+			dateInput.classList.remove("article-date-input-error");
+			dateInput.classList.add("article-date-input-valid");
+			dateInputError.classList.remove("article-date-error-visible");
+			dateInputError.classList.add("article-date-error");
+		}
+	});
+
+	dateInput.addEventListener("blur", () => {
+		const { raw } = formatDM(dateInput.value);
+		if (raw.length > 0 && raw.length < 4) {
+			dateInput.setCustomValidity("Введите дату полностью");
+			dateInput.classList.remove("article-date-input-valid");
+			dateInput.classList.add("article-date-input-error");
+			dateInputError.classList.remove("article-date-error");
+			dateInputError.classList.add("article-date-error-visible");
+		}
+	});
+}

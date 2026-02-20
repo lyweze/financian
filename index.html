@@ -6,10 +6,10 @@
 		<title>FINANCIAN</title>
 		<link rel="stylesheet" href="./style.css" />
 	</head>
-	<body id="top">
+	<body>
 		<!-- Фоновое изображение -->
 		<!-- <img
-			src="./assets/nadoel.jpg"
+			src="./assets/islands-150.webp"
 			class="background-image"
 			aria-hidden="true"
 		/> -->
@@ -63,7 +63,7 @@
 									/>
 								</svg>
 								<h4>Расходы</h4>
-								<p>мало</p>
+								<p class="main-overview-wastes"></p>
 							</li>
 							<li>
 								<svg
@@ -77,7 +77,7 @@
 									/>
 								</svg>
 								<h4>Доходы</h4>
-								<p>Много</p>
+								<p class="main-overview-income"></p>
 							</li>
 						</ul>
 
@@ -94,7 +94,7 @@
 							</svg>
 							<p>
 								Остаток:
-								<span>мноого</span>
+								<span class="main-overview-remainder"></span>
 							</p>
 						</div>
 					</section>
@@ -202,7 +202,8 @@
 					<li>
 						<h3>Категория</h3>
 
-						<select aria-label="Категория">
+						<select class="article-category-input" aria-label="Категория">
+							<option value="unselected">Выберите категорию</option>
 							<option value="food">Еда</option>
 							<option value="clothing">Одежда</option>
 							<option value="transport">Транспорт</option>
@@ -213,12 +214,28 @@
 					<li>
 						<h3>Сумма</h3>
 
-						<input type="number" name="amount" id="amount" aria-label="Сумма" />
+						<input
+							type="text"
+							inputmode="numeric"
+							name="amount"
+							id="amount"
+							class="article-amount-input"
+							aria-label="Сумма"
+						/>
 					</li>
 					<li>
 						<h3>Дата</h3>
 
-						<input type="date" name="date" id="date" aria-label="Дата" />
+						<input
+							type="text"
+							class="article-date-input-valid"
+							placeholder="ДД.ММ"
+							inputmode="numeric"
+							maxlength="5"
+						/>
+						<small class="article-date-error"
+							>Введите корректную дату в формате ДД.ММ (например 05.11)</small
+						>
 					</li>
 				</ul>
 
