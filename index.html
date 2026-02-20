@@ -8,7 +8,7 @@
 	</head>
 	<body>
 		<!-- Фоновое изображение -->
-		<img src="" class="background-image" alt="Фоновое изображение" />
+		<img src="" class="background-image" aria-hidden="true" />
 
 		<header class="header">
 			<div class="header-liquid-fill">
@@ -20,7 +20,7 @@
 			</div>
 		</header>
 
-		<nav class="nav">
+		<nav class="nav" aria-label="Основная навигация">
 			<ul class="nav-ul">
 				<li class="nav-ul-li nav-ul-li-active">
 					<button type="button">
@@ -36,16 +36,23 @@
 		</nav>
 
 		<main class="main">
-			<h2>Главная</h2>
+			<h2 class="visually-hidden">Главная</h2>
 
 			<ul class="main-ul">
 				<li class="main-ul-li-1">
-					<div class="main-container main-overview-container">
-						<h3>Быстрый обзор</h3>
+					<section
+						class="main-container main-overview-container"
+						aria-labelledby="overview-title"
+					>
+						<h3 id="overview-title">Быстрый обзор</h3>
 
 						<ul>
 							<li>
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 640 640"
+									aria-hidden="true"
+								>
 									<path
 										fill="#989ba1ff"
 										d="M128 96C92.7 96 64 124.7 64 160L64 448C64 483.3 92.7 512 128 512L512 512C547.3 512 576 483.3 576 448L576 256C576 220.7 547.3 192 512 192L136 192C122.7 192 112 181.3 112 168C112 154.7 122.7 144 136 144L520 144C533.3 144 544 133.3 544 120C544 106.7 533.3 96 520 96L128 96zM480 320C497.7 320 512 334.3 512 352C512 369.7 497.7 384 480 384C462.3 384 448 369.7 448 352C448 334.3 462.3 320 480 320z"
@@ -55,19 +62,27 @@
 								<p>мало</p>
 							</li>
 							<li>
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 640 640"
+									aria-hidden="true"
+								>
 									<path
 										fill="#989ba1ff"
 										d="M297.4 566.6C309.9 579.1 330.2 579.1 342.7 566.6L502.7 406.6C515.2 394.1 515.2 373.8 502.7 361.3C490.2 348.8 469.9 348.8 457.4 361.3L352 466.7L352 96C352 78.3 337.7 64 320 64C302.3 64 288 78.3 288 96L288 466.7L182.6 361.3C170.1 348.8 149.8 348.8 137.3 361.3C124.8 373.8 124.8 394.1 137.3 406.6L297.3 566.6z"
 									/>
 								</svg>
 								<h4>Доходы</h4>
-								<p>дохуя</p>
+								<p>Много</p>
 							</li>
 						</ul>
 
 						<div>
-							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 640 640"
+								aria-hidden="true"
+							>
 								<path
 									fill="#989ba1ff"
 									d="M320 32C373 32 416 75 416 128C416 181 373 224 320 224C267 224 224 181 224 128C224 75 267 32 320 32zM80 368C80 297.9 127 236.6 197.1 203.1C222.4 244.4 268 272 320 272C375.7 272 424.1 240.3 448 194C463.8 182.7 483.1 176 504 176L523.5 176C533.9 176 541.5 185.8 539 195.9L521.9 264.2C531.8 276.6 540.1 289.9 546.3 304L568 304C581.3 304 592 314.7 592 328L592 440C592 453.3 581.3 464 568 464L528 464C511.5 486 489.5 503.6 464 514.7L464 544C464 561.7 449.7 576 432 576L399 576C384.7 576 372.2 566.5 368.2 552.8L361.1 528L278.8 528L271.7 552.8C267.8 566.5 255.3 576 241 576L208 576C190.3 576 176 561.7 176 544L176 514.7C119.5 490 80 433.6 80 368zM456 384C469.3 384 480 373.3 480 360C480 346.7 469.3 336 456 336C442.7 336 432 346.7 432 360C432 373.3 442.7 384 456 384z"
@@ -78,19 +93,13 @@
 								<span>мноого</span>
 							</p>
 						</div>
-					</div>
+					</section>
 
-					<div class="main-container main-last-operations-container">
-						<h3>Последние операции</h3>
-
-						<button type="button" class="main-last-operation-collapse-button">
-							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
-								<path
-									fill="#989ba1ff"
-									d="M300.3 440.8C312.9 451 331.4 450.3 343.1 438.6L471.1 310.6C480.3 301.4 483 287.7 478 275.7C473 263.7 461.4 256 448.5 256L192.5 256C179.6 256 167.9 263.8 162.9 275.8C157.9 287.8 160.7 301.5 169.9 310.6L297.9 438.6L300.3 440.8z"
-								/>
-							</svg>
-						</button>
+					<section
+						class="main-container main-last-operations-container"
+						aria-labelledby="last-ops-title"
+					>
+						<h3 id="last-ops-title">Последние операции</h3>
 
 						<ul>
 							<li>
@@ -99,6 +108,7 @@
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											viewBox="0 0 640 640"
+											aria-hidden="true"
 										>
 											<path
 												fill="#989ba1ff"
@@ -119,6 +129,7 @@
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											viewBox="0 0 640 640"
+											aria-hidden="true"
 										>
 											<path
 												fill="#989ba1ff"
@@ -139,6 +150,7 @@
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											viewBox="0 0 640 640"
+											aria-hidden="true"
 										>
 											<path
 												fill="#989ba1ff"
@@ -159,6 +171,7 @@
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											viewBox="0 0 640 640"
+											aria-hidden="true"
 										>
 											<path
 												fill="#989ba1ff"
@@ -179,6 +192,7 @@
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											viewBox="0 0 640 640"
+											aria-hidden="true"
 										>
 											<path
 												fill="#989ba1ff"
@@ -199,34 +213,45 @@
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											viewBox="0 0 640 640"
+											aria-hidden="true"
 										>
 											<path
 												fill="#989ba1ff"
-												d="M32 400C32 479.5 96.5 544 176 544L480 544C550.7 544 608 486.7 608 416C608 364.4 577.5 319.9 533.5 299.7C540.2 286.6 544 271.7 544 256C544 203 501 160 448 160C430.3 160 413.8 164.8 399.6 173.1C375.5 127.3 327.4 96 272 96C192.5 96 128 160.5 128 240C128 248 128.7 255.9 129.9 263.5C73 282.7 32 336.6 32 400z"
+												d="M96 320C96 289.1 121.1 264 152 264C182.9 264 208 289.1 208 320C208 350.9 182.9 376 152 376C121.1 376 96 350.9 96 320zM264 320C264 289.1 289.1 264 320 264C350.9 264 376 289.1 376 320C376 350.9 350.9 376 320 376C289.1 376 264 350.9 264 320zM488 264C518.9 264 544 289.1 544 320C544 350.9 518.9 376 488 376C457.1 376 432 350.9 432 320C432 289.1 457.1 264 488 264z"
 											/>
 										</svg>
 
-										<p>Онлайн</p>
+										<p>Разное</p>
 									</div>
 
 									<p><span>01.04</span>120.00 ₽</p>
 								</div>
 							</li>
 						</ul>
-					</div>
+
+						<button type="button" class="main-last-operation-collapse-button">
+							Показать все
+						</button>
+					</section>
 				</li>
 
 				<li class="main-ul-li-2">
-					<div class="main-container main-chart-container">
-						<h3>График операций</h3>
+					<section
+						class="main-container main-chart-container"
+						aria-labelledby="chart-title"
+					>
+						<h3 id="chart-title">График операций</h3>
 
-						<div id="chart">
+						<div id="chart" role="img" aria-label="График расходов">
 							<!-- Здесь будет отображаться график расходов -->
 						</div>
-					</div>
+					</section>
 
-					<div class="main-container main-tips-container">
-						<h3>Советы по управлению финансами</h3>
+					<section
+						class="main-container main-tips-container"
+						aria-labelledby="tips-title"
+					>
+						<h3 id="tips-title">Советы по управлению финансами</h3>
 
 						<ul>
 							<li>
@@ -241,33 +266,39 @@
 								</p>
 							</li>
 						</ul>
-					</div>
+					</section>
 				</li>
 
 				<li class="main-ul-li-3">
-					<div class="main-container main-goals-container">
-						<h3>Цели</h3>
+					<section
+						class="main-container main-goals-container"
+						aria-labelledby="goals-title"
+					>
+						<h3 id="goals-title">Цели</h3>
 
 						<p>Здесь будут отображаться ваши финансовые цели и их прогресс.</p>
 
 						<ul class="main-goals-ul">
 							<li>
 								<h4>Цель 1</h4>
-								<button type="button" class="edit-goal-1">Редактировать</button>
+								<p class="edit-goal-button">Редактировать</p>
 							</li>
 							<li>
 								<h4>Цель 2</h4>
-								<button type="button" class="edit-goal-2">Редактировать</button>
+								<p class="edit-goal-button">Редактировать</p>
 							</li>
 						</ul>
 
 						<button class="main-goal-add-button" type="button">
 							Добавить цель
 						</button>
-					</div>
+					</section>
 
-					<div class="main-container main-categories-container">
-						<h3>Расходы по категориям</h3>
+					<section
+						class="main-container main-categories-container"
+						aria-labelledby="categories-title"
+					>
+						<h3 id="categories-title">Расходы по категориям</h3>
 
 						<ul>
 							<li>
@@ -276,6 +307,7 @@
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											viewBox="0 0 640 640"
+											aria-hidden="true"
 										>
 											<path
 												fill="#989ba1ff"
@@ -296,6 +328,7 @@
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											viewBox="0 0 640 640"
+											aria-hidden="true"
 										>
 											<path
 												fill="#989ba1ff"
@@ -316,6 +349,7 @@
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											viewBox="0 0 640 640"
+											aria-hidden="true"
 										>
 											<path
 												fill="#989ba1ff"
@@ -330,15 +364,58 @@
 								</div>
 							</li>
 						</ul>
-					</div>
+					</section>
 				</li>
 			</ul>
 
-			<button class="main-button" type="button">+</button>
+			<button class="main-button" type="button" aria-label="Добавить операцию">
+				+
+			</button>
 		</main>
 
+		<article
+			style="opacity: 0; z-index: -100; transition: opacity 0.3s ease"
+			class="add-article"
+			role="dialog"
+			aria-modal="true"
+			aria-labelledby="add-article-title"
+		>
+			<h2 id="add-article-title">Добавить</h2>
+
+			<div class="add-article-div">
+				<ul>
+					<li>
+						<h3>Категория</h3>
+
+						<select aria-label="Категория">
+							<option value="food">Еда</option>
+							<option value="clothing">Одежда</option>
+							<option value="transport">Транспорт</option>
+							<option value="online">Онлайн</option>
+							<option value="other">Разное</option>
+						</select>
+					</li>
+					<li>
+						<h3>Сумма</h3>
+
+						<input type="number" name="amount" id="amount" aria-label="Сумма" />
+					</li>
+					<li>
+						<h3>Дата</h3>
+
+						<input type="date" name="date" id="date" aria-label="Дата" />
+					</li>
+				</ul>
+
+				<div>
+					<button type="button" class="article-add-button">Добавить</button>
+					<button type="button" class="article-close-button">Закрыть</button>
+				</div>
+			</div>
+		</article>
+
 		<!-- Жидкое стекло -->
-		<svg style="display: none">
+		<svg style="display: none" aria-hidden="true">
 			<filter id="displacementFilter">
 				<feImage
 					href="data:image/png;base64,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"

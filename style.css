@@ -1,3 +1,17 @@
+:root {
+	--bg: #d4d4d6;
+	--text: #262626;
+	--muted: #989ba1;
+	--accent: #285e59;
+	--glass: rgba(255, 255, 255, 0.12);
+	--border: rgba(255, 255, 255, 0.2);
+	--border-soft: rgba(116, 116, 116, 0.2);
+	--shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+	--transition: all 0.3s ease;
+	--radius-lg: 24px;
+	--radius-md: 16px;
+}
+
 html {
 	scroll-behavior: smooth;
 }
@@ -18,21 +32,21 @@ body {
 	display: flex;
 	align-items: center;
 	flex-direction: column;
-	background-color: #d4d4d6;
+	background-color: var(--bg);
 	margin: 0;
-	padding: 0;
+	padding: 0 0 0 0;
 	padding-top: 120px;
 }
 
 .background-image {
 	position: fixed;
-	top: -200px;
-	left: -20px;
+	top: 0;
+	left: 0;
 	width: 100%;
-	object-fit: cover;
+	height: 100vh;
+	object-fit: fill;
 	opacity: 1;
 	z-index: -1;
-	filter: blur(10px) contrast(0.6);
 }
 
 /* Header */
@@ -45,7 +59,7 @@ body {
 	width: 1440px;
 	height: 80px;
 	position: fixed;
-	border-radius: 16px;
+	border-radius: var(--radius-md);
 }
 .header-liquid-fill {
 	padding: 0 20px;
@@ -54,19 +68,19 @@ body {
 	justify-content: space-between;
 	width: 100%;
 	height: 78px;
-	border-radius: 24px;
-	background: rgba(255, 255, 255, 0.12);
+	border-radius: var(--radius-lg);
+	background: var(--glass);
 	backdrop-filter: blur(4px) brightness(1.05);
 	-webkit-backdrop-filter: blur(4px) brightness(1.05);
-	border: 1px solid rgba(255, 255, 255, 0.2);
-	box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+	border: 1px solid var(--border);
+	box-shadow: var(--shadow);
 }
 .header-logo {
 	font-size: 36px;
 	font-weight: bold;
-	color: #262626;
+	color: var(--text);
 	cursor: pointer;
-	transition: all 0.3s ease;
+	transition: var(--transition);
 }
 .header-logo:hover {
 	letter-spacing: 2px;
@@ -76,20 +90,19 @@ body {
 	height: 40px;
 	border: none;
 	border-radius: 14px;
-	background: rgba(255, 255, 255, 0.12);
-	backdrop-filter: blur(4px) brightness(1.05);
-	-webkit-backdrop-filter: blur(4px) brightness(1.05);
-	border: 1px solid rgba(116, 116, 116, 0.2);
+	background: var(--glass);
+	border: 1px solid var(--border-soft);
 	cursor: pointer;
-	transition: all 0.3s ease;
+	transition: var(--transition);
 
 	> span {
 		font-size: 24px;
-		color: #000000;
+		color: #000;
 	}
 }
 .header-account:hover {
 	background-color: #fff;
+	transform: scale(1.02);
 }
 
 /* nav */
@@ -110,24 +123,24 @@ body {
 		border: none;
 		background: none;
 		cursor: pointer;
-		transition: all 0.3s ease;
+		transition: var(--transition);
 
 		> span {
 			font-size: 24px;
-			color: #262626;
-			transition: all 0.3s ease;
+			color: var(--text);
+			transition: var(--transition);
 		}
 
 		&:hover {
 			> span {
-				color: #285e59;
+				color: var(--accent);
 			}
 		}
 	}
 }
 .nav-ul-li-active {
 	> button {
-		border-bottom: 2px solid #285e59;
+		border-bottom: 2px solid var(--accent);
 	}
 }
 
@@ -151,18 +164,17 @@ body {
 	border: none;
 	border-radius: 16px;
 	cursor: pointer;
-	color: #000000;
+	color: #000;
 	font-size: 24px;
 	font-weight: bold;
-	transition: all 0.3s ease;
-	background: rgba(255, 255, 255, 0.12);
-	backdrop-filter: blur(4px) brightness(1.05);
-	-webkit-backdrop-filter: blur(4px) brightness(1.05);
-	border: 1px solid rgba(255, 255, 255, 0.2);
-	box-shadow: 0px 0px 20px 10px rgba(0, 0, 0, 0.1);
+	transition: var(--transition);
+	background: var(--glass);
+	border: 1px solid var(--border);
+	box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
 
 	&:hover {
-		background-color: #ffffff;
+		background-color: #fff;
+		transform: scale(1.02);
 	}
 }
 .main-ul {
@@ -194,20 +206,15 @@ body {
 	display: flex;
 	flex-direction: column;
 	padding: 15px;
-	border-radius: 24px;
-	background: rgba(255, 255, 255, 0.12);
-	backdrop-filter: blur(4px) brightness(1.05);
-	-webkit-backdrop-filter: blur(4px) brightness(1.05);
-	border: 1px solid rgba(255, 255, 255, 0.2);
-	box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+	border-radius: var(--radius-lg);
+	background: var(--glass);
+	border: 1px solid var(--border);
+	box-shadow: var(--shadow);
 
-	> h3 {
-		margin: 0;
-		color: #262626;
-	}
+	> h3,
 	> p {
 		margin: 0;
-		color: #262626;
+		color: var(--text);
 	}
 }
 
@@ -231,14 +238,20 @@ body {
 			align-items: center;
 			justify-content: center;
 			flex-direction: column;
-			border-radius: 16px;
+			border-radius: var(--radius-md);
 			width: calc((100% - 60px) / 2);
 			aspect-ratio: 1;
 			height: auto;
-			background: rgba(255, 255, 255, 0.12);
-			backdrop-filter: blur(4px) brightness(1.05);
-			-webkit-backdrop-filter: blur(4px) brightness(1.05);
-			border: 1px solid rgba(255, 255, 255, 0.2);
+			background: var(--glass);
+			border: 1px solid var(--border);
+			transition: var(--transition);
+			cursor: pointer;
+
+			&:hover {
+				background-color: #fff;
+				transform: scale(1.02);
+				box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
+			}
 
 			> svg {
 				width: 30px;
@@ -247,14 +260,14 @@ body {
 			> h4 {
 				margin: 0;
 				margin-top: 15px;
-				color: #989ba1;
+				color: var(--muted);
 			}
 			> p {
 				display: flex;
 				font-size: 20px;
 				font-weight: bold;
 				margin: 0;
-				color: #262626;
+				color: var(--text);
 			}
 		}
 	}
@@ -274,13 +287,12 @@ body {
 			display: flex;
 			font-size: 20px;
 			font-weight: bold;
-			margin: 0;
-			margin-left: 10px;
-			color: #262626;
+			margin: 0 0 0 10px;
+			color: var(--text);
 
 			> span {
 				margin-left: 10px;
-				color: #285e59;
+				color: var(--accent);
 			}
 		}
 	}
@@ -291,25 +303,21 @@ body {
 	gap: 20px;
 
 	> button {
-		position: absolute;
-		right: 15px;
+		padding: 8px;
 		border: none;
-		background: none;
+		border-radius: 14px;
+		background: var(--glass);
+		border: 1px solid var(--border-soft);
+		box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 		cursor: pointer;
-		transition: all 0.3s ease;
-
-		> svg {
-			width: 20px;
-			height: 20px;
-			transition: all 0.3s ease;
-		}
+		color: #000;
+		font-size: 16px;
+		font-weight: bold;
+		transition: var(--transition);
 
 		&:hover {
-			> svg {
-				transform: scale(1.2);
-			}
-			background-color: rgba(0, 0, 0, 0.05);
-			border-radius: 8px;
+			background-color: #fff;
+			transform: scale(1.02);
 		}
 	}
 
@@ -324,10 +332,9 @@ body {
 
 		> li {
 			margin: 0;
-			padding: 0;
+			padding: 0 0 10px 0;
 			display: flex;
 			flex-direction: column;
-			padding-bottom: 10px;
 			border-bottom: 2px solid #26262611;
 
 			> div {
@@ -346,9 +353,8 @@ body {
 
 					> p {
 						font-size: 16px;
-						margin: 0;
-						margin-left: 5px;
-						color: #262626;
+						margin: 0 0 0 5px;
+						color: var(--text);
 						font-weight: bold;
 					}
 				}
@@ -358,11 +364,11 @@ body {
 					align-items: center;
 					font-size: 16px;
 					margin: 0;
-					color: #285e59;
+					color: var(--accent);
 					font-weight: bold;
 
 					> span {
-						color: #262626;
+						color: var(--text);
 						margin-right: 5px;
 						font-size: 12px;
 					}
@@ -384,7 +390,7 @@ body {
 .main-chart-container {
 	> h3 {
 		margin: 0;
-		color: #262626;
+		color: var(--text);
 	}
 }
 
@@ -393,36 +399,32 @@ body {
 	> ul {
 		list-style: none;
 		padding: 0;
-		margin: 0;
-		margin-top: 10px;
+		margin: 10px 0 0 0;
 		display: flex;
 		flex-direction: column;
 		gap: 10px;
 
 		> li {
 			padding: 10px;
-			border-radius: 16px;
-			background: rgba(255, 255, 255, 0.12);
-			backdrop-filter: blur(4px) brightness(1.05);
-			-webkit-backdrop-filter: blur(4px) brightness(1.05);
-			border: 1px solid rgba(255, 255, 255, 0.2);
+			border-radius: var(--radius-md);
+			background: var(--glass);
+			border: 1px solid var(--border);
 
 			> p {
-				margin: 0;
-				margin-left: 5px;
+				margin: 0 0 0 5px;
 				font-size: 16px;
-				color: #262626;
+				color: var(--text);
 				font-weight: bold;
 
 				> span {
-					color: #262626;
+					color: var(--text);
 				}
 			}
 		}
 	}
 	> h3 {
 		margin: 0;
-		color: #262626;
+		color: var(--text);
 	}
 }
 
@@ -435,7 +437,7 @@ body {
 
 	> p {
 		font-size: 16px;
-		color: #989ba1;
+		color: var(--muted);
 		font-weight: bold;
 	}
 
@@ -453,39 +455,36 @@ body {
 			justify-content: space-between;
 			align-items: center;
 			border-radius: 14px;
-			background: rgba(255, 255, 255, 0.12);
-			backdrop-filter: blur(4px) brightness(1.05);
-			-webkit-backdrop-filter: blur(4px) brightness(1.05);
-			border: 1px solid rgba(116, 116, 116, 0.2);
-			cursor: pointer;
-			transition: all 0.3s ease;
-			color: #000000;
+			background: var(--glass);
+			border: 1px solid var(--border-soft);
+			color: #000;
 			font-size: 16px;
 			font-weight: bold;
+			transition: var(--transition);
+
+			&:hover {
+				background-color: #fff;
+				transform: scale(1.02);
+				box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
+
+				> p {
+					opacity: 1;
+				}
+			}
 
 			> h4 {
 				margin: 0;
 			}
 
-			> button {
-				padding: 5px;
-				border: none;
-				border-radius: 8px;
-				background: rgba(255, 255, 255, 0.12);
-				backdrop-filter: blur(4px) brightness(1.05);
-				-webkit-backdrop-filter: blur(4px) brightness(1.05);
-				border: 1px solid rgba(116, 116, 116, 0.2);
-				box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
-				cursor: pointer;
-				transition: all 0.3s ease;
-				color: #000000;
+			> p {
+				margin: 0;
+				padding: 0;
+				transition: var(--transition);
+				color: var(--muted);
 				font-size: 16px;
 				font-weight: bold;
-				transition: all 0.3s ease;
-
-				&:hover {
-					background-color: #ffffff;
-				}
+				opacity: 0;
+				cursor: pointer;
 			}
 		}
 	}
@@ -494,20 +493,18 @@ body {
 	padding: 8px;
 	border: none;
 	border-radius: 14px;
-	background: rgba(255, 255, 255, 0.12);
-	backdrop-filter: blur(4px) brightness(1.05);
-	-webkit-backdrop-filter: blur(4px) brightness(1.05);
-	border: 1px solid rgba(116, 116, 116, 0.2);
-	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+	background: var(--glass);
+	border: 1px solid var(--border-soft);
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 	cursor: pointer;
-	transition: all 0.3s ease;
-	color: #000000;
+	transition: var(--transition);
+	color: #000;
 	font-size: 16px;
 	font-weight: bold;
-	transition: all 0.3s ease;
 
 	&:hover {
-		background-color: #ffffff;
+		background-color: #fff;
+		transform: scale(1.02);
 	}
 }
 
@@ -515,26 +512,34 @@ body {
 .main-categories-container {
 	> h3 {
 		margin: 0;
-		color: #262626;
+		color: var(--text);
 	}
 
 	> ul {
 		list-style: none;
 		width: 100%;
 		padding: 0;
-		margin: 0;
-		margin-top: 20px;
+		margin: 20px 0 0 0;
 		display: flex;
 		flex-direction: column;
 		gap: 10px;
 
 		> li {
-			margin: 0;
-			padding: 0;
+			padding: 10px;
 			display: flex;
 			flex-direction: column;
-			padding-bottom: 10px;
-			border-bottom: 2px solid #26262611;
+			justify-content: space-between;
+			border-radius: 14px;
+			background: var(--glass);
+			border: 1px solid var(--border-soft);
+			cursor: pointer;
+			transition: var(--transition);
+
+			&:hover {
+				background-color: #fff;
+				transform: scale(1.02);
+				box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
+			}
 
 			> div {
 				display: flex;
@@ -552,9 +557,8 @@ body {
 
 					> p {
 						font-size: 16px;
-						margin: 0;
-						margin-left: 5px;
-						color: #262626;
+						margin: 0 0 0 5px;
+						color: var(--text);
 						font-weight: bold;
 					}
 				}
@@ -564,33 +568,142 @@ body {
 					align-items: center;
 					font-size: 16px;
 					margin: 0;
-					color: #285e59;
+					color: var(--accent);
 					font-weight: bold;
 				}
 			}
 		}
+	}
+}
 
-		> li:last-child {
-			border-bottom: none;
+/* Дабавление операций */
+.add-article {
+	z-index: 1004;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	backdrop-filter: blur(10px) brightness(1.05);
+
+	> h2 {
+		margin: 0 0 10px 0;
+		color: var(--text);
+		font-weight: bold;
+	}
+
+	> div {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex-direction: column;
+		gap: 20px;
+		padding: 20px;
+		border-radius: var(--radius-md);
+		background: #fff;
+		box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+
+		> ul {
+			list-style: none;
 			padding: 0;
+			margin: 0;
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+
+			> li {
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+				gap: 10px;
+
+				> h3 {
+					margin: 0 0 0 5px;
+					color: var(--text);
+				}
+
+				> select,
+				> input {
+					width: calc(100% - 20px);
+					padding: 10px;
+					border-radius: 8px;
+					border: 1px solid #26262611;
+					outline: none;
+					font-size: 16px;
+					transition: var(--transition);
+
+					&:hover {
+						border-color: var(--accent);
+						box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
+					}
+
+					&:focus {
+						border-color: var(--accent);
+						box-shadow: 0 0 5px rgba(40, 94, 89, 0.5);
+					}
+				}
+
+				> select {
+					width: 100%;
+					appearance: none;
+
+					> option {
+						padding: 10px;
+						border-radius: 80px;
+						border: 1px solid #26262611;
+						outline: none;
+						font-size: 16px;
+						transition: var(--transition);
+
+						&:hover {
+							border-color: var(--accent);
+							box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
+						}
+
+						&:focus {
+							border-color: var(--accent);
+							box-shadow: 0 0 5px rgba(40, 94, 89, 0.5);
+							outline: none;
+							background-color: #fff;
+						}
+					}
+				}
+			}
+		}
+
+		> div {
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			gap: 10px;
+
+			> button {
+				padding: 10px;
+				border-radius: 8px;
+				outline: none;
+				font-size: 16px;
+				background: #fff;
+				border: 1px solid var(--border-soft);
+				box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+				cursor: pointer;
+				transition: var(--transition);
+
+				&:hover,
+				&:focus {
+					border-color: var(--accent);
+					box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
+				}
+			}
 		}
 	}
 }
 
 @supports not (hanging-punctuation: first) {
 	.header-liquid-fill {
-		backdrop-filter: url(#displacementFilter) blur(2px);
-		-webkit-backdrop-filter: url(#displacementFilter) blur(2px);
-	}
-	.main-container {
-		backdrop-filter: url(#displacementFilter) blur(2px);
-		-webkit-backdrop-filter: url(#displacementFilter) blur(2px);
-	}
-	.main-button {
-		backdrop-filter: url(#displacementFilter) blur(2px);
-		-webkit-backdrop-filter: url(#displacementFilter) blur(2px);
-	}
-	.header-account {
 		backdrop-filter: url(#displacementFilter) blur(2px);
 		-webkit-backdrop-filter: url(#displacementFilter) blur(2px);
 	}
