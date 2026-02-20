@@ -20,6 +20,12 @@ const els = {
 	lastOperationsContainer: qs(".main-last-operations-container"),
 	lastOperationsList: qs(".main-last-operations-ul-collapsed"),
 	headerLogo: qs(".header-logo"),
+	wastes: qs(".main-overview-wastes"),
+	income: qs(".main-overview-income"),
+	remainder: qs(".main-overview-remainder"),
+	dateInput: qs(".article-date-input-valid"),
+	dateInputError: qs(".article-date-error"),
+	overviewWastes: qs(".overview-wastes"),
 };
 
 // Данные
@@ -58,70 +64,79 @@ let isModalOpen = false;
 let isCollapsed = true;
 let isSortedByDate = false;
 
-// Рендеры
-const renderOperations = () => {
+// Helpers
+const sortOperationsByDateDesc = () => {
 	if (!isSortedByDate) {
 		allOperations.sort((a, b) => new Date(b.date) - new Date(a.date));
 		isSortedByDate = true;
 	}
+};
+
+const createOperationItem = ({ category, amount }) => {
+	const li = document.createElement("li");
+	li.innerHTML = `
+		<div>
+			<div>
+				<img src="./assets/svg/${category}.svg" alt="" />
+				<p>${operationsCategories[category] ?? category}</p>
+			</div>
+			<p>${amount} ₽</p>
+		</div>`;
+	return li;
+};
+
+const createCategoryItem = ([category, amount]) => {
+	const li = document.createElement("li");
+	li.innerHTML = `
+		<div>
+			<div>
+				<img src="./assets/svg/${category}.svg" alt="" />
+				<p>${operationsCategories[category] ?? category}</p>
+			</div>
+			<p>${amount.toFixed(2)} ₽</p>
+		</div>`;
+	return li;
+};
+
+const recalcTotals = () =>
+	allOperations.reduce((acc, { category, amount }) => {
+		acc[category] = (acc[category] || 0) + amount;
+		return acc;
+	}, {});
+
+// Рендеры
+const renderOperations = () => {
+	sortOperationsByDateDesc();
 
 	const { lastOperationsList } = els;
 	if (!lastOperationsList) return;
 
 	const fragment = document.createDocumentFragment();
-	allOperations.forEach(({ category, amount }) => {
-		const li = document.createElement("li");
-		li.innerHTML = `
-			<div>
-				<div>
-					<img src="./assets/svg/${category}.svg" alt="" />
-					<p>${operationsCategories[category] ?? category}</p>
-				</div>
-				<p>${amount} ₽</p>
-			</div>`;
-		fragment.appendChild(li);
-	});
-	lastOperationsList.innerHTML = "";
-	lastOperationsList.appendChild(fragment);
+	allOperations.forEach((op) => fragment.appendChild(createOperationItem(op)));
+	lastOperationsList.replaceChildren(fragment);
 };
 
 const renderCategoriesTotals = () => {
 	const { categoriesList } = els;
 	if (!categoriesList) return;
 
-	const totals = allOperations.reduce((acc, { category, amount }) => {
-		acc[category] = (acc[category] || 0) + amount;
-		return acc;
-	}, {});
+	const totals = recalcTotals();
+	const fragment = document.createDocumentFragment();
 
-	categoriesList.innerHTML = "";
-	Object.entries(totals).forEach(([category, amount]) => {
-		const li = document.createElement("li");
-		li.innerHTML = `
-			<div>
-				<div>
-					<img src="./assets/svg/${category}.svg" alt="" />
-					<p>${operationsCategories[category] ?? category}</p>
-				</div>
-				<p>${amount.toFixed(2)} ₽</p>
-			</div>`;
-		categoriesList.appendChild(li);
-	});
+	Object.entries(totals).forEach((entry) =>
+		fragment.appendChild(createCategoryItem(entry)),
+	);
+
+	categoriesList.replaceChildren(fragment);
 };
 
 const renderOverviewTotals = () => {
-	const wastesEl = qs(".main-overview-wastes");
-	const incomeEl = qs(".main-overview-income");
-	const remainderEl = qs(".main-overview-remainder");
+	const { wastes, income, remainder } = els;
+	const totalExpenses = allOperations.reduce((sum, { amount }) => sum + amount, 0);
 
-	const totalExpenses = allOperations.reduce(
-		(sum, { amount }) => sum + amount,
-		0,
-	);
-
-	if (wastesEl) wastesEl.textContent = `${totalExpenses.toFixed(2)} ₽`;
-	if (incomeEl) incomeEl.textContent = "нет";
-	if (remainderEl) remainderEl.textContent = "пусто(";
+	if (wastes) wastes.textContent = `${totalExpenses.toFixed(2)} ₽`;
+	if (income) income.textContent = "нет";
+	if (remainder) remainder.textContent = "пусто(";
 };
 
 // Логика
@@ -130,63 +145,33 @@ const toggleModal = () => {
 	setVisibility(els.addArticle, isModalOpen);
 };
 
-const navigateHome = () => {
-	window.location.href = "index.html";
-};
+const navigateHome = () => (window.location.href = "index.html");
 
 const toggleCollapse = () => {
-	const {
-		lastOperationsList,
-		lastOperationsContainer,
-		lastOperationsCollapse,
-	} = els;
-	if (
-		!lastOperationsList ||
-		!lastOperationsContainer ||
-		!lastOperationsCollapse
-	)
-		return;
+	const { lastOperationsList, lastOperationsContainer, lastOperationsCollapse } = els;
+	if (!lastOperationsList || !lastOperationsContainer || !lastOperationsCollapse) return;
 
-	lastOperationsList.classList.toggle(
-		"main-last-operations-ul-collapsed",
-		!isCollapsed,
-	);
-	lastOperationsList.classList.toggle(
-		"main-last-operations-ul-opened",
-		isCollapsed,
-	);
+	lastOperationsList.classList.toggle("main-last-operations-ul-collapsed", !isCollapsed);
+	lastOperationsList.classList.toggle("main-last-operations-ul-opened", isCollapsed);
 
-	lastOperationsContainer.classList.toggle(
-		"last-operations-container-collapsed",
-		!isCollapsed,
-	);
-	lastOperationsContainer.classList.toggle(
-		"last-operations-container-opened",
-		isCollapsed,
-	);
+	lastOperationsContainer.classList.toggle("last-operations-container-collapsed", !isCollapsed);
+	lastOperationsContainer.classList.toggle("last-operations-container-opened", isCollapsed);
 
 	lastOperationsCollapse.textContent = isCollapsed ? "Скрыть" : "Показать все";
 	isCollapsed = !isCollapsed;
 
-	if (isCollapsed) {
-		window.scrollTo({ top: 0, behavior: "smooth" });
-	} else {
-		setTimeout(
-			() =>
-				window.scrollTo({
-					top: lastOperationsCollapse.offsetTop,
-					behavior: "smooth",
-				}),
-			300,
-		);
-	}
+	const scrollTop = isCollapsed ? 0 : lastOperationsCollapse.offsetTop;
+	setTimeout(
+		() => window.scrollTo({ top: scrollTop, behavior: "smooth" }),
+		isCollapsed ? 0 : 300,
+	);
 };
 
 const addOperation = () => {
 	const categoryInput = qs(".article-category-input")?.value;
 	const amountInput = qs(".article-amount-input")?.value;
-	let dateInput = qs(".article-date-input-valid")?.dataset.raw;
-	dateInput = dateInput ? dateInput.replace(/(\d{2})(\d{2})/, "$1-$2") : null;
+	const rawDate = qs(".article-date-input-valid")?.dataset.raw;
+	const dateInput = rawDate ? rawDate.replace(/(\d{2})(\d{2})/, "$1-$2") : null;
 
 	if (!categoryInput || !amountInput || !dateInput) return;
 
@@ -204,28 +189,7 @@ const addOperation = () => {
 	toggleModal();
 };
 
-// Инициализация
-const init = () => {
-	renderOperations();
-	renderCategoriesTotals();
-	renderOverviewTotals();
-
-	bindClick(els.headerLogo, navigateHome);
-	bindClick(els.mainButton, toggleModal);
-	bindClick(els.closeButton, toggleModal);
-	bindClick(
-		els.addArticle,
-		(e) => e.target === els.addArticle && toggleModal(),
-	);
-	bindClick(els.lastOperationsCollapse, toggleCollapse);
-	bindClick(els.addButton, addOperation);
-};
-
-init();
-
-const dateInput = qs(".article-date-input-valid");
-const dateInputError = qs(".article-date-error");
-
+// Валидация даты
 const isValidDayMonth = (dd, mm) => {
 	if (!(mm >= 1 && mm <= 12)) return false;
 	const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -243,10 +207,12 @@ const formatDM = (value) => {
 	return { raw, dd, mm, formatted };
 };
 
-if (dateInput && dateInputError) {
+const setupDateValidation = () => {
+	const { dateInput, dateInputError } = els;
+	if (!dateInput || !dateInputError) return;
+
 	dateInput.addEventListener("input", () => {
 		const { raw, dd, mm, formatted } = formatDM(dateInput.value);
-
 		dateInput.value = formatted;
 		dateInput.dataset.raw = raw;
 
@@ -262,18 +228,14 @@ if (dateInput && dateInputError) {
 
 		if (!isValidDayMonth(d, m)) {
 			dateInput.setCustomValidity("Неверная дата");
-			dateInput.classList.remove("article-date-input-valid");
-			dateInput.classList.add("article-date-input-error");
-			dateInputError.classList.remove("article-date-error");
-			dateInputError.classList.add("article-date-error-visible");
+			dateInput.classList.replace("article-date-input-valid", "article-date-input-error");
+			dateInputError.classList.replace("article-date-error", "article-date-error-visible");
 			dateInput.style.animation = "shake 0.3s";
 			setTimeout(() => (dateInput.style.animation = ""), 300);
 		} else {
 			dateInput.setCustomValidity("");
-			dateInput.classList.remove("article-date-input-error");
-			dateInput.classList.add("article-date-input-valid");
-			dateInputError.classList.remove("article-date-error-visible");
-			dateInputError.classList.add("article-date-error");
+			dateInput.classList.replace("article-date-input-error", "article-date-input-valid");
+			dateInputError.classList.replace("article-date-error-visible", "article-date-error");
 		}
 	});
 
@@ -281,10 +243,35 @@ if (dateInput && dateInputError) {
 		const { raw } = formatDM(dateInput.value);
 		if (raw.length > 0 && raw.length < 4) {
 			dateInput.setCustomValidity("Введите дату полностью");
-			dateInput.classList.remove("article-date-input-valid");
-			dateInput.classList.add("article-date-input-error");
-			dateInputError.classList.remove("article-date-error");
-			dateInputError.classList.add("article-date-error-visible");
+			dateInput.classList.replace("article-date-input-valid", "article-date-input-error");
+			dateInputError.classList.replace("article-date-error", "article-date-error-visible");
 		}
 	});
-}
+};
+
+// Инициализация
+const init = () => {
+	renderOperations();
+	renderCategoriesTotals();
+	renderOverviewTotals();
+	setupDateValidation();
+
+	bindClick(els.headerLogo, navigateHome);
+	bindClick(els.mainButton, toggleModal);
+	bindClick(els.closeButton, toggleModal);
+	bindClick(els.addArticle, (e) => e.target === els.addArticle && toggleModal());
+	bindClick(els.lastOperationsCollapse, toggleCollapse);
+	bindClick(els.addButton, addOperation);
+
+	els.overviewWastes?.addEventListener("click", () => {
+		els.lastOperationsContainer.style.animation = "pulse 0.5s";
+		els.lastOperationsCollapse.style.animation = "pulseColor 0.5s";
+		setTimeout(() => {
+			els.lastOperationsContainer.style.animation = "";
+			els.lastOperationsCollapse.style.animation = "";
+		}, 500);
+		console.log("Показать детали расходов");
+	});
+};
+
+init();
