@@ -1,6 +1,10 @@
+"use strict";
+
 // Утилиты
 const qs = (sel) => document.querySelector(sel);
 const bindClick = (el, handler) => el?.addEventListener("click", handler);
+const toggleClasses = (el, pairs) =>
+	pairs.forEach(([cls, on]) => el.classList.toggle(cls, on));
 const setVisibility = (el, visible) => {
 	if (!el) return;
 	el.style.opacity = visible ? "1" : "0";
@@ -60,15 +64,17 @@ const operationsCategories = {
 };
 
 // Состояния
-let isModalOpen = false;
-let isCollapsed = true;
-let isSortedByDate = false;
+const state = {
+	isModalOpen: false,
+	isCollapsed: true,
+	isSortedByDate: false,
+};
 
 // Helpers
 const sortOperationsByDateDesc = () => {
-	if (!isSortedByDate) {
+	if (!state.isSortedByDate) {
 		allOperations.sort((a, b) => new Date(b.date) - new Date(a.date));
-		isSortedByDate = true;
+		state.isSortedByDate = true;
 	}
 };
 
@@ -108,6 +114,17 @@ const recalcTotals = () =>
 const renderOperations = () => {
 	sortOperationsByDateDesc();
 
+	if (allOperations.length === 0) {
+		const { lastOperationsContainer } = els;
+		if (lastOperationsContainer) {
+			lastOperationsContainer.innerHTML = `
+			<h3>Последние операции</h3>
+					<p>Здесь пока нет операций</p>`;
+			lastOperationsContainer.style.justifyContent = "center";
+			lastOperationsContainer.style.alignItems = "center";
+		}
+	}
+
 	const { lastOperationsList } = els;
 	if (!lastOperationsList) return;
 
@@ -132,7 +149,10 @@ const renderCategoriesTotals = () => {
 
 const renderOverviewTotals = () => {
 	const { wastes, income, remainder } = els;
-	const totalExpenses = allOperations.reduce((sum, { amount }) => sum + amount, 0);
+	const totalExpenses = allOperations.reduce(
+		(sum, { amount }) => sum + amount,
+		0,
+	);
 
 	if (wastes) wastes.textContent = `${totalExpenses.toFixed(2)} ₽`;
 	if (income) income.textContent = "нет";
@@ -141,29 +161,43 @@ const renderOverviewTotals = () => {
 
 // Логика
 const toggleModal = () => {
-	isModalOpen = !isModalOpen;
-	setVisibility(els.addArticle, isModalOpen);
+	state.isModalOpen = !state.isModalOpen;
+	setVisibility(els.addArticle, state.isModalOpen);
 };
 
 const navigateHome = () => (window.location.href = "index.html");
 
 const toggleCollapse = () => {
-	const { lastOperationsList, lastOperationsContainer, lastOperationsCollapse } = els;
-	if (!lastOperationsList || !lastOperationsContainer || !lastOperationsCollapse) return;
+	const {
+		lastOperationsList,
+		lastOperationsContainer,
+		lastOperationsCollapse,
+	} = els;
+	if (
+		!lastOperationsList ||
+		!lastOperationsContainer ||
+		!lastOperationsCollapse
+	)
+		return;
 
-	lastOperationsList.classList.toggle("main-last-operations-ul-collapsed", !isCollapsed);
-	lastOperationsList.classList.toggle("main-last-operations-ul-opened", isCollapsed);
+	toggleClasses(lastOperationsList, [
+		["main-last-operations-ul-collapsed", !state.isCollapsed],
+		["main-last-operations-ul-opened", state.isCollapsed],
+	]);
+	toggleClasses(lastOperationsContainer, [
+		["last-operations-container-collapsed", !state.isCollapsed],
+		["last-operations-container-opened", state.isCollapsed],
+	]);
 
-	lastOperationsContainer.classList.toggle("last-operations-container-collapsed", !isCollapsed);
-	lastOperationsContainer.classList.toggle("last-operations-container-opened", isCollapsed);
+	lastOperationsCollapse.textContent = state.isCollapsed
+		? "Скрыть"
+		: "Показать все";
+	state.isCollapsed = !state.isCollapsed;
 
-	lastOperationsCollapse.textContent = isCollapsed ? "Скрыть" : "Показать все";
-	isCollapsed = !isCollapsed;
-
-	const scrollTop = isCollapsed ? 0 : lastOperationsCollapse.offsetTop;
+	const scrollTop = state.isCollapsed ? 0 : lastOperationsCollapse.offsetTop;
 	setTimeout(
 		() => window.scrollTo({ top: scrollTop, behavior: "smooth" }),
-		isCollapsed ? 0 : 300,
+		state.isCollapsed ? 0 : 300,
 	);
 };
 
@@ -181,7 +215,7 @@ const addOperation = () => {
 		amount: parseFloat(amountInput),
 		date: dateInput,
 	});
-	isSortedByDate = false;
+	state.isSortedByDate = false;
 
 	renderOperations();
 	renderCategoriesTotals();
@@ -202,9 +236,26 @@ const formatDM = (value) => {
 	const raw = value.replace(/\D/g, "").slice(0, 4);
 	const dd = raw.slice(0, 2);
 	const mm = raw.slice(2, 4);
-	let formatted = dd;
-	if (raw.length > 2) formatted += "." + mm;
+	const formatted = raw.length > 2 ? `${dd}.${mm}` : dd;
 	return { raw, dd, mm, formatted };
+};
+
+const applyDateError = (input, errorEl, message) => {
+	input.setCustomValidity(message);
+	input.classList.replace(
+		"article-date-input-valid",
+		"article-date-input-error",
+	);
+	errorEl.classList.replace("article-date-error", "article-date-error-visible");
+};
+
+const clearDateError = (input, errorEl) => {
+	input.setCustomValidity("");
+	input.classList.replace(
+		"article-date-input-error",
+		"article-date-input-valid",
+	);
+	errorEl.classList.replace("article-date-error-visible", "article-date-error");
 };
 
 const setupDateValidation = () => {
@@ -217,9 +268,7 @@ const setupDateValidation = () => {
 		dateInput.dataset.raw = raw;
 
 		if (raw.length < 4) {
-			dateInput.setCustomValidity("");
-			dateInputError.classList.remove("article-date-error-visible");
-			dateInputError.classList.add("article-date-error");
+			clearDateError(dateInput, dateInputError);
 			return;
 		}
 
@@ -227,24 +276,18 @@ const setupDateValidation = () => {
 		const m = Number(mm);
 
 		if (!isValidDayMonth(d, m)) {
-			dateInput.setCustomValidity("Неверная дата");
-			dateInput.classList.replace("article-date-input-valid", "article-date-input-error");
-			dateInputError.classList.replace("article-date-error", "article-date-error-visible");
+			applyDateError(dateInput, dateInputError, "Неверная дата");
 			dateInput.style.animation = "shake 0.3s";
 			setTimeout(() => (dateInput.style.animation = ""), 300);
 		} else {
-			dateInput.setCustomValidity("");
-			dateInput.classList.replace("article-date-input-error", "article-date-input-valid");
-			dateInputError.classList.replace("article-date-error-visible", "article-date-error");
+			clearDateError(dateInput, dateInputError);
 		}
 	});
 
 	dateInput.addEventListener("blur", () => {
 		const { raw } = formatDM(dateInput.value);
 		if (raw.length > 0 && raw.length < 4) {
-			dateInput.setCustomValidity("Введите дату полностью");
-			dateInput.classList.replace("article-date-input-valid", "article-date-input-error");
-			dateInputError.classList.replace("article-date-error", "article-date-error-visible");
+			applyDateError(dateInput, dateInputError, "Введите дату полностью");
 		}
 	});
 };
@@ -259,7 +302,10 @@ const init = () => {
 	bindClick(els.headerLogo, navigateHome);
 	bindClick(els.mainButton, toggleModal);
 	bindClick(els.closeButton, toggleModal);
-	bindClick(els.addArticle, (e) => e.target === els.addArticle && toggleModal());
+	bindClick(
+		els.addArticle,
+		(e) => e.target === els.addArticle && toggleModal(),
+	);
 	bindClick(els.lastOperationsCollapse, toggleCollapse);
 	bindClick(els.addButton, addOperation);
 
@@ -270,7 +316,6 @@ const init = () => {
 			els.lastOperationsContainer.style.animation = "";
 			els.lastOperationsCollapse.style.animation = "";
 		}, 500);
-		console.log("Показать детали расходов");
 	});
 };
 

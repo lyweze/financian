@@ -313,6 +313,12 @@ body {
 	transition: var(--transition);
 }
 
+.main-last-operations-container > h4 {
+	font-weight: bold;
+	margin: 0;
+	color: var(--text);
+}
+
 .main-last-operations-container > button {
 	padding: 8px;
 	border: none;
