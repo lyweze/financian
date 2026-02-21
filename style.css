@@ -1,3 +1,4 @@
+/* -------------------- Базовые переменные темы -------------------- */
 :root {
 	--bg: #d4d4d6;
 	--text: #262626;
@@ -6,19 +7,25 @@
 	--glass: rgba(255, 255, 255, 0.12);
 	--border: rgba(255, 255, 255, 0.2);
 	--border-soft: rgba(116, 116, 116, 0.2);
-	--shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+	--shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 	--transition: all 0.3s ease;
 	--radius-lg: 24px;
 	--radius-md: 16px;
 }
 
+/* -------------------- Базовая разметка -------------------- */
 html {
 	scroll-behavior: smooth;
 }
 
 body {
-	overflow-y: scroll;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
 	width: 100%;
+	margin: 0;
+	padding: 120px 0 20px;
+	overflow-y: scroll;
 	font-family:
 		system-ui,
 		-apple-system,
@@ -31,14 +38,10 @@ body {
 		"Open Sans",
 		"Helvetica Neue",
 		sans-serif;
-	display: flex;
-	align-items: center;
-	flex-direction: column;
 	background-color: var(--bg);
-	margin: 0;
-	padding: 120px 0 20px;
 }
 
+/* Фоновое изображение */
 .background-image {
 	position: fixed;
 	top: 0;
@@ -50,37 +53,37 @@ body {
 	z-index: -1;
 }
 
-/* Header */
+/* -------------------- Шапка -------------------- */
 .header {
-	z-index: 1000;
+	position: fixed;
 	top: 20px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	width: 1440px;
 	height: 80px;
-	position: fixed;
 	border-radius: var(--radius-md);
+	z-index: 1000;
 }
 
 .header-liquid-fill {
-	padding: 0 20px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	width: 100%;
 	height: 78px;
+	padding: 0 20px;
+	border: 1px solid var(--border);
 	border-radius: var(--radius-lg);
 	background: var(--glass);
+	box-shadow: var(--shadow);
 	backdrop-filter: blur(4px) brightness(1.05);
 	-webkit-backdrop-filter: blur(4px) brightness(1.05);
-	border: 1px solid var(--border);
-	box-shadow: var(--shadow);
 }
 
 .header-logo {
 	font-size: 36px;
-	font-weight: bold;
+	font-weight: 700;
 	color: var(--text);
 	cursor: pointer;
 	transition: var(--transition);
@@ -91,12 +94,13 @@ body {
 }
 
 .header-account {
-	padding: 6px 18px;
+	display: inline-flex;
+	align-items: center;
 	height: 40px;
-	border: none;
+	padding: 6px 18px;
+	border: 1px solid var(--border-soft);
 	border-radius: 14px;
 	background: var(--glass);
-	border: 1px solid var(--border-soft);
 	cursor: pointer;
 	transition: var(--transition);
 }
@@ -111,18 +115,18 @@ body {
 	transform: scale(1.02);
 }
 
-/* nav */
+/* -------------------- Навигация -------------------- */
 .nav {
-	height: 40px;
 	display: flex;
+	height: 40px;
 }
 
 .nav-ul {
 	display: flex;
 	gap: 20px;
-	list-style: none;
-	padding: 0;
 	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 
 .nav-ul-li button {
@@ -135,7 +139,7 @@ body {
 
 .nav-ul-li button span {
 	font-size: 24px;
-	font-weight: bold;
+	font-weight: 700;
 	color: var(--text);
 	transition: var(--transition);
 }
@@ -152,34 +156,34 @@ body {
 	color: var(--accent);
 }
 
-/* main */
+/* -------------------- Основной блок -------------------- */
 .main {
-	margin-top: 20px;
-	width: 1400px;
 	display: flex;
 	justify-content: center;
+	width: 1400px;
+	margin-top: 20px;
 }
 
 .main > h2 {
 	display: none;
 }
 
+/* Кнопка добавления операций (плавающая) */
 .main-button {
 	position: fixed;
-	bottom: 20px;
 	right: 20px;
+	bottom: 20px;
 	width: 60px;
 	height: 60px;
-	border: none;
+	border: 1px solid var(--border);
 	border-radius: 16px;
-	cursor: pointer;
+	background: var(--glass);
+	box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
 	color: #000;
 	font-size: 24px;
-	font-weight: bold;
+	font-weight: 700;
+	cursor: pointer;
 	transition: var(--transition);
-	background: var(--glass);
-	border: 1px solid var(--border);
-	box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
 }
 
 .main-button:hover {
@@ -187,37 +191,39 @@ body {
 	transform: scale(1.02);
 }
 
+/* Карточки колонок */
 .main-ul {
-	list-style: none;
-	padding: 0;
-	margin: 0;
 	display: flex;
 	flex-direction: row;
 	gap: 20px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 
 .main-ul > li {
-	row-gap: 20px;
-	list-style: none;
-	padding: 0;
-	margin: 0;
 	display: flex;
 	flex-direction: column;
+	row-gap: 20px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 
 .main-ul-li-1 {
-	width: 380px;
 	display: flex;
 	flex-direction: column;
+	width: 380px;
 }
 
+/* Общий стиль карточек */
 .main-container {
 	display: flex;
 	flex-direction: column;
 	padding: 15px;
+	border: 1px solid var(--border);
 	border-radius: var(--radius-lg);
 	background: var(--glass);
-	border: 1px solid var(--border);
 	box-shadow: var(--shadow);
 }
 
@@ -227,35 +233,33 @@ body {
 	color: var(--text);
 }
 
-/* Быстрый обзор */
+/* -------------------- Быстрый обзор -------------------- */
 .main-overview-container {
 	gap: 20px;
 }
 
 .main-overview-container > ul {
+	display: flex;
+	justify-content: space-between;
 	width: 100%;
 	margin-top: 40px;
-	list-style: none;
 	padding: 0;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
+	list-style: none;
 }
 
 .main-overview-container > ul > li {
-	padding: 10px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-	border-radius: var(--radius-md);
 	width: calc((100% - 60px) / 2);
-	aspect-ratio: 1;
-	height: auto;
-	background: var(--glass);
+	padding: 10px;
 	border: 1px solid var(--border);
+	border-radius: var(--radius-md);
+	background: var(--glass);
 	transition: var(--transition);
 	cursor: pointer;
+	aspect-ratio: 1;
 }
 
 .main-overview-container > ul > li:hover {
@@ -270,22 +274,22 @@ body {
 }
 
 .main-overview-container > ul > li h4 {
-	margin: 15px 0 0 0;
+	margin: 15px 0 0;
 	color: var(--muted);
 }
 
 .main-overview-container > ul > li p {
 	display: flex;
-	font-size: 20px;
-	font-weight: bold;
 	margin: 0;
+	font-size: 20px;
+	font-weight: 700;
 	color: var(--text);
 }
 
 .main-overview-container > div {
-	padding-left: 5px;
 	display: flex;
 	width: 100%;
+	padding-left: 5px;
 }
 
 .main-overview-container > div svg {
@@ -294,11 +298,11 @@ body {
 }
 
 .main-overview-container > div p {
-	align-self: flex-end;
 	display: flex;
-	font-size: 20px;
-	font-weight: bold;
+	align-self: flex-end;
 	margin: 0 0 0 10px;
+	font-size: 20px;
+	font-weight: 700;
 	color: var(--text);
 }
 
@@ -307,29 +311,28 @@ body {
 	color: var(--accent);
 }
 
-/* Последние операции */
+/* -------------------- Последние операции -------------------- */
 .main-last-operations-container {
 	gap: 20px;
 	transition: var(--transition);
 }
 
 .main-last-operations-container > h4 {
-	font-weight: bold;
 	margin: 0;
+	font-weight: 700;
 	color: var(--text);
 }
 
 .main-last-operations-container > button {
 	padding: 8px;
-	border: none;
+	border: 1px solid var(--border-soft);
 	border-radius: 14px;
 	background: var(--glass);
-	border: 1px solid var(--border-soft);
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-	cursor: pointer;
 	color: #000;
 	font-size: 16px;
-	font-weight: bold;
+	font-weight: 700;
+	cursor: pointer;
 	transition: var(--transition);
 }
 
@@ -339,21 +342,21 @@ body {
 }
 
 .main-last-operations-container > ul {
-	list-style: none;
-	width: 100%;
-	padding: 0;
-	margin: 0;
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	list-style: none;
 	transition: var(--transition);
 }
 
 .main-last-operations-container > ul > li {
-	margin: 0;
-	padding: 0 0 10px 0;
 	display: flex;
 	flex-direction: column;
+	margin: 0;
+	padding: 0 0 10px;
 	border-bottom: 2px solid #26262611;
 }
 
@@ -374,32 +377,33 @@ body {
 }
 
 .main-last-operations-container > ul > li > div > div p {
-	font-size: 16px;
 	margin: 0 0 0 5px;
+	font-size: 16px;
+	font-weight: 700;
 	color: var(--text);
-	font-weight: bold;
 }
 
 .main-last-operations-container > ul > li > div > p {
 	display: flex;
 	align-items: center;
-	font-size: 16px;
 	margin: 0;
+	font-size: 16px;
+	font-weight: 700;
 	color: var(--accent);
-	font-weight: bold;
 }
 
 .main-last-operations-container > ul > li > div > p span {
-	color: var(--text);
 	margin-right: 5px;
 	font-size: 12px;
+	color: var(--text);
 }
 
 .main-last-operations-container > ul > li:last-child {
-	border-bottom: none;
 	padding: 0;
+	border-bottom: none;
 }
 
+/* Состояния свернутого/развернутого списка */
 .last-operations-container-collapsed {
 	height: 30vh;
 	transition: var(--transition);
@@ -433,49 +437,46 @@ body {
 	mask-image: none;
 }
 
+/* -------------------- Колонка 2 (график/советы) -------------------- */
 .main-ul-li-2 {
 	width: 440px;
 }
 
-/* График */
-.main-chart-container h3 {
-	margin: 0;
-	color: var(--text);
-}
-
-/* Советы */
+.main-chart-container h3,
 .main-tips-container h3 {
 	margin: 0;
 	color: var(--text);
 }
 
+/* Советы */
 .main-tips-container > ul {
-	list-style: none;
-	padding: 0;
-	margin: 10px 0 0 0;
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
+	margin: 10px 0 0;
+	padding: 0;
+	list-style: none;
 }
 
 .main-tips-container > ul > li {
 	padding: 10px;
+	border: 1px solid var(--border);
 	border-radius: var(--radius-md);
 	background: var(--glass);
-	border: 1px solid var(--border);
 }
 
 .main-tips-container > ul > li p {
 	margin: 0 0 0 5px;
 	font-size: 16px;
+	font-weight: 700;
 	color: var(--text);
-	font-weight: bold;
 }
 
 .main-tips-container > ul > li p span {
 	color: var(--text);
 }
 
+/* -------------------- Колонка 3 (цели/категории) -------------------- */
 .main-ul-li-3 {
 	width: 380px;
 }
@@ -487,30 +488,30 @@ body {
 
 .main-goals-container > p {
 	font-size: 16px;
+	font-weight: 700;
 	color: var(--muted);
-	font-weight: bold;
 }
 
 .main-goals-container > ul {
-	margin: 0;
-	padding: 0;
-	list-style: none;
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 
 .main-goals-container > ul > li {
-	padding: 10px;
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
+	justify-content: space-between;
+	padding: 10px;
+	border: 1px solid var(--border-soft);
 	border-radius: 14px;
 	background: var(--glass);
-	border: 1px solid var(--border-soft);
 	color: #000;
 	font-size: 16px;
-	font-weight: bold;
+	font-weight: 700;
 	transition: var(--transition);
 }
 
@@ -531,26 +532,25 @@ body {
 .main-goals-container > ul > li p {
 	margin: 0;
 	padding: 0;
-	transition: var(--transition);
-	color: var(--muted);
-	font-size: 16px;
-	font-weight: bold;
 	opacity: 0;
+	font-size: 16px;
+	font-weight: 700;
+	color: var(--muted);
+	transition: var(--transition);
 	cursor: pointer;
 }
 
 .main-goal-add-button {
 	padding: 8px;
-	border: none;
+	border: 1px solid var(--border-soft);
 	border-radius: 14px;
 	background: var(--glass);
-	border: 1px solid var(--border-soft);
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-	cursor: pointer;
-	transition: var(--transition);
 	color: #000;
 	font-size: 16px;
-	font-weight: bold;
+	font-weight: 700;
+	cursor: pointer;
+	transition: var(--transition);
 }
 
 .main-goal-add-button:hover {
@@ -565,24 +565,23 @@ body {
 }
 
 .main-categories-container > ul {
-	list-style: none;
-	width: 100%;
-	padding: 0;
-	margin: 20px 0 0 0;
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
+	width: 100%;
+	margin: 20px 0 0;
+	padding: 0;
+	list-style: none;
 }
 
 .main-categories-container > ul > li {
-	padding: 10px;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	padding: 10px;
+	border: 1px solid var(--border-soft);
 	border-radius: 14px;
 	background: var(--glass);
-	border: 1px solid var(--border-soft);
-	cursor: pointer;
 	transition: var(--transition);
 }
 
@@ -609,26 +608,23 @@ body {
 }
 
 .main-categories-container > ul > li > div > div p {
-	font-size: 16px;
 	margin: 0 0 0 5px;
+	font-size: 16px;
+	font-weight: 700;
 	color: var(--text);
-	font-weight: bold;
 }
 
 .main-categories-container > ul > li > div > p {
 	display: flex;
 	align-items: center;
-	font-size: 16px;
 	margin: 0;
+	font-size: 16px;
+	font-weight: 700;
 	color: var(--accent);
-	font-weight: bold;
 }
 
-/* Дабавление операций */
+/* -------------------- Модалка: расходы -------------------- */
 .add-article {
-	z-index: 1004;
-	width: 100%;
-	height: 100%;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -636,20 +632,23 @@ body {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	width: 100%;
+	height: 100%;
 	backdrop-filter: blur(10px) brightness(1.05);
+	z-index: 1004;
 }
 
 .add-article > h2 {
-	margin: 0 0 10px 0;
+	margin: 0 0 10px;
+	font-weight: 700;
 	color: var(--text);
-	font-weight: bold;
 }
 
 .add-article > div {
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: space-between;
-	flex-direction: column;
 	gap: 20px;
 	padding: 20px;
 	border-radius: var(--radius-md);
@@ -658,12 +657,12 @@ body {
 }
 
 .add-article > div > ul {
-	list-style: none;
-	padding: 0;
-	margin: 0;
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 
 .add-article > div > ul > li {
@@ -682,13 +681,13 @@ body {
 .add-article > div > ul > li input {
 	width: calc(100% - 20px);
 	padding: 10px;
-	border-radius: 8px;
 	border: 1px solid #26262611;
-	outline: none;
-	font-size: 16px;
-	font-weight: bold;
-	transition: var(--transition);
+	border-radius: 8px;
 	background-color: var(--glass);
+	font-size: 16px;
+	font-weight: 700;
+	outline: none;
+	transition: var(--transition);
 }
 
 .add-article > div > ul > li select:hover,
@@ -719,9 +718,8 @@ body {
 
 .add-article > div > ul > li select option {
 	padding: 10px;
-	border-radius: 80px;
 	border: 1px solid #26262611;
-	outline: none;
+	border-radius: 80px;
 	font-size: 16px;
 	transition: var(--transition);
 }
@@ -739,23 +737,23 @@ body {
 }
 
 .add-article > div > div {
-	width: 100%;
 	display: flex;
 	justify-content: center;
 	gap: 10px;
+	width: 100%;
 }
 
 .add-article > div > div > button {
 	padding: 10px;
-	border-radius: 8px;
-	outline: none;
-	font-size: 16px;
-	font-weight: bold;
-	background: #fff;
 	border: 1px solid var(--border-soft);
+	border-radius: 8px;
+	background: #fff;
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+	font-size: 16px;
+	font-weight: 700;
 	cursor: pointer;
 	transition: var(--transition);
+	outline: none;
 }
 
 .add-article > div > div > button:hover,
@@ -764,25 +762,227 @@ body {
 	box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
 }
 
-.article-date-error-visible {
-	color: red;
-	font-size: 14px;
-	font-weight: bold;
+.article-date-error-visible,
+.article-date-error {
 	margin: 0 0 0 5px;
-	opacity: 1;
+	font-size: 14px;
+	font-weight: 700;
+	color: red;
 	transition: var(--transition);
+}
+
+.article-date-error-visible {
+	opacity: 1;
 }
 
 .article-date-error {
-	color: red;
-	font-size: 14px;
-	font-weight: bold;
-	margin: 0 0 0 5px;
 	opacity: 0;
-	transition: var(--transition);
 	margin-top: -20px;
 }
 
+/* -------------------- Модалка: доходы -------------------- */
+.add-income-article {
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	backdrop-filter: blur(10px) brightness(1.05);
+	transition: var(--transition);
+	z-index: 1005;
+}
+
+.add-income-article > h2 {
+	margin: 0 0 10px;
+	font-weight: 700;
+	color: var(--text);
+}
+
+.add-income-article > div {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	gap: 20px;
+	padding: 20px;
+	border-radius: var(--radius-md);
+	background: #fff;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.add-income-article > div > h3 {
+	margin: 0;
+	font-weight: 700;
+	color: var(--text);
+}
+
+.add-income-article > div > div {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 10px;
+	width: 100%;
+}
+
+.add-income-article > div > div > h3 {
+	align-self: center;
+	margin: 0;
+	color: var(--text);
+}
+
+.add-income-article > div > div > ul {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.add-income-article > div > div > ul li {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 10px;
+}
+
+.add-income-article > div > div > ul li > h3 {
+	margin: 0 0 0 5px;
+	color: var(--text);
+}
+
+.add-income-article > div > div > ul li > input {
+	width: calc(100% - 20px);
+	padding: 10px;
+	border: 1px solid #26262611;
+	border-radius: 8px;
+	background-color: var(--glass);
+	font-size: 16px;
+	font-weight: 700;
+	outline: none;
+	transition: var(--transition);
+}
+
+.add-income-article > div > div > ul li > input:hover {
+	border-color: var(--accent);
+	box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
+}
+
+.add-income-article > div > div > ul li > input:focus {
+	border-color: var(--accent);
+	box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
+}
+
+.add-income-article > div > div > div {
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+	width: 100%;
+}
+
+.add-income-article > div > div > div > button {
+	padding: 10px;
+	border: 1px solid var(--border-soft);
+	border-radius: 8px;
+	background: #fff;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+	font-size: 16px;
+	font-weight: 700;
+	cursor: pointer;
+	transition: var(--transition);
+	outline: none;
+}
+
+.add-income-article > div > div > div > button:hover,
+.add-income-article > div > div > div > button:focus {
+	border-color: var(--accent);
+	box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
+}
+
+.add-income-article > div > ul {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 10px;
+	width: 100%;
+	height: 200px;
+	margin: 0;
+	padding: 10px 0 0;
+	list-style: none;
+	border-radius: 16px;
+	overflow: hidden;
+	overflow-y: scroll;
+	transition: var(--transition);
+	-webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+	mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+}
+
+.add-income-article > div > ul > h3 {
+	align-self: center;
+	margin: 0;
+	color: var(--text);
+}
+
+.add-income-article > div > ul > li {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px;
+	border: 1px solid var(--border-soft);
+	border-radius: 14px;
+	background: var(--glass);
+	transition: var(--transition);
+}
+
+.add-income-article > div > ul > li:hover {
+	background-color: #fff;
+	transform: scale(1.02);
+	box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
+}
+
+.add-income-article > div > ul > li > p {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	margin: 0;
+	font-size: 16px;
+	font-weight: 700;
+	color: var(--text);
+}
+
+.add-income-article > div > ul > li > p > span {
+	margin-left: 10px;
+	color: var(--accent);
+}
+
+.article-income-date-error-visible,
+.article-income-date-error {
+	margin: 0 0 0 5px;
+	font-size: 14px;
+	font-weight: 700;
+	color: red;
+	transition: var(--transition);
+}
+
+.article-income-date-error {
+	opacity: 0;
+	margin-top: -20px;
+}
+
+.article-income-date-input-error {
+	border-color: red;
+	color: red;
+	font-size: 16px;
+	font-weight: 700;
+}
+
+/* -------------------- Анимации -------------------- */
 @keyframes shake {
 	0%,
 	100% {
@@ -806,7 +1006,7 @@ body {
 	}
 	50% {
 		transform: scale(1.05);
-		box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.377);
+		box-shadow: 0 0 20px rgba(0, 0, 0, 0.377);
 	}
 }
 
@@ -820,6 +1020,7 @@ body {
 	}
 }
 
+/* -------------------- Фолбэк для backdrop-filter -------------------- */
 @supports not (hanging-punctuation: first) {
 	.header-liquid-fill {
 		backdrop-filter: url(#displacementFilter) blur(2px);

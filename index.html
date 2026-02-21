@@ -7,23 +7,20 @@
 		<link rel="stylesheet" href="./style.css" />
 	</head>
 	<body>
-		<!-- Фоновое изображение -->
-		<!-- <img
-			src="./assets/islands-150.webp"
-			class="background-image"
-			aria-hidden="true"
-		/> -->
+		<!-- Фоновое изображение (опционально) -->
+		<!-- <img src="./assets/islands-150.webp" class="background-image" aria-hidden="true" /> -->
 
+		<!-- Шапка сайта -->
 		<header class="header">
 			<div class="header-liquid-fill">
 				<h1 class="header-logo">FINANCIAN</h1>
-
 				<button type="button" class="header-account">
 					<span>Вход</span>
 				</button>
 			</div>
 		</header>
 
+		<!-- Основная навигация -->
 		<nav class="nav" aria-label="Основная навигация">
 			<ul class="nav-ul">
 				<li class="nav-ul-li nav-ul-li-active">
@@ -39,11 +36,13 @@
 			</ul>
 		</nav>
 
+		<!-- Основной контент -->
 		<main class="main">
 			<h2 class="visually-hidden">Главная</h2>
 
 			<ul class="main-ul">
 				<li class="main-ul-li-1">
+					<!-- Быстрый обзор -->
 					<section
 						class="main-container main-overview-container"
 						aria-labelledby="overview-title"
@@ -65,7 +64,7 @@
 								<h4>Расходы</h4>
 								<p class="main-overview-wastes"></p>
 							</li>
-							<li>
+							<li class="overview-income">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									viewBox="0 0 640 640"
@@ -99,14 +98,13 @@
 						</div>
 					</section>
 
+					<!-- Последние операции -->
 					<section
 						class="main-container main-last-operations-container last-operations-container-collapsed"
 						aria-labelledby="last-ops-title"
 					>
 						<h3 id="last-ops-title">Последние операции</h3>
-
 						<ul class="main-last-operations-ul-collapsed"></ul>
-
 						<button type="button" class="main-last-operation-collapse-button">
 							Показать все
 						</button>
@@ -114,23 +112,21 @@
 				</li>
 
 				<li class="main-ul-li-2">
+					<!-- График операций -->
 					<section
 						class="main-container main-chart-container"
 						aria-labelledby="chart-title"
 					>
 						<h3 id="chart-title">График операций</h3>
-
-						<div id="chart" role="img" aria-label="График расходов">
-							<!-- Здесь будет отображаться график расходов -->
-						</div>
+						<div id="chart" role="img" aria-label="График расходов"></div>
 					</section>
 
+					<!-- Советы -->
 					<section
 						class="main-container main-tips-container"
 						aria-labelledby="tips-title"
 					>
 						<h3 id="tips-title">Советы по управлению финансами</h3>
-
 						<ul>
 							<li>
 								<p>
@@ -148,14 +144,13 @@
 				</li>
 
 				<li class="main-ul-li-3">
+					<!-- Цели -->
 					<section
 						class="main-container main-goals-container"
 						aria-labelledby="goals-title"
 					>
 						<h3 id="goals-title">Цели</h3>
-
 						<p>Здесь будут отображаться ваши финансовые цели и их прогресс.</p>
-
 						<ul class="main-goals-ul">
 							<li>
 								<h4>Цель 1</h4>
@@ -166,28 +161,29 @@
 								<p class="edit-goal-button">Редактировать</p>
 							</li>
 						</ul>
-
 						<button class="main-goal-add-button" type="button">
 							Добавить цель
 						</button>
 					</section>
 
+					<!-- Расходы по категориям -->
 					<section
 						class="main-container main-categories-container"
 						aria-labelledby="categories-title"
 					>
 						<h3 id="categories-title">Расходы по категориям</h3>
-
 						<ul></ul>
 					</section>
 				</li>
 			</ul>
 
+			<!-- Кнопка добавления операции -->
 			<button class="main-button" type="button" aria-label="Добавить операцию">
 				+
 			</button>
 		</main>
 
+		<!-- Модалка добавления расходов -->
 		<article
 			style="opacity: 0; z-index: -100; transition: opacity 0.3s ease"
 			class="add-article"
@@ -196,13 +192,16 @@
 			aria-labelledby="add-article-title"
 		>
 			<h2 id="add-article-title">Добавить</h2>
-
 			<div class="add-article-div">
 				<ul>
 					<li>
 						<h3>Категория</h3>
-
-						<select class="article-category-input" aria-label="Категория">
+						<select
+							class="article-category-input"
+							name="article-category-input"
+							id="article-category-input"
+							aria-label="Категория"
+						>
 							<option value="unselected">Выберите категорию</option>
 							<option value="food">Еда</option>
 							<option value="clothing">Одежда</option>
@@ -213,7 +212,6 @@
 					</li>
 					<li>
 						<h3>Сумма</h3>
-
 						<input
 							type="text"
 							inputmode="numeric"
@@ -225,10 +223,11 @@
 					</li>
 					<li>
 						<h3>Дата</h3>
-
 						<input
 							type="text"
 							class="article-date-input-valid"
+							name="article-date-input"
+							id="article-date-input"
 							placeholder="ДД.ММ"
 							inputmode="numeric"
 							maxlength="5"
@@ -238,7 +237,6 @@
 						>
 					</li>
 				</ul>
-
 				<div>
 					<button type="button" class="article-add-button">Добавить</button>
 					<button type="button" class="article-close-button">Закрыть</button>
@@ -246,14 +244,73 @@
 			</div>
 		</article>
 
-		<!-- Жидкое стекло -->
+		<!-- Модалка добавления доходов -->
+		<article
+			style="opacity: 0; z-index: -100; transition: opacity 0.3s ease"
+			class="add-income-article"
+			role="dialog"
+			aria-modal="true"
+			aria-labelledby="add-income-article-title"
+		>
+			<h2 id="add-income-article-title">Доходы</h2>
+			<div class="add-income-main-div">
+				<div class="add-income-article-div">
+					<h3>Добавить доход</h3>
+					<ul>
+						<li>
+							<h3>Сумма</h3>
+							<input
+								type="text"
+								inputmode="numeric"
+								name="income-amount"
+								id="income-amount"
+								class="article-income-amount-input"
+								aria-label="Сумма"
+							/>
+						</li>
+						<li>
+							<h3>Дата</h3>
+							<input
+								type="text"
+								class="article-income-date-input-valid"
+								name="income-date"
+								id="income-date"
+								placeholder="ДД.ММ"
+								inputmode="numeric"
+								maxlength="5"
+								pattern="[0-9]*"
+							/>
+							<small class="article-income-date-error"
+								>Введите корректную дату в формате ДД.ММ (например 05.11)</small
+							>
+						</li>
+					</ul>
+					<div>
+						<button type="button" class="article-income-add-button">
+							Добавить
+						</button>
+						<button type="button" class="article-income-close-button">
+							Закрыть
+						</button>
+					</div>
+				</div>
+
+				<h3>История</h3>
+				<ul class="overview-income-history-ul">
+					<li>
+						<p>дата <span>Сумма ₽</span></p>
+					</li>
+				</ul>
+			</div>
+		</article>
+
+		<!-- Определение фильтра "Жидкое стекло" -->
 		<svg style="display: none" aria-hidden="true">
 			<filter id="displacementFilter">
 				<feImage
 					href="data:image/png;base64,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"
 					preserveAspectRatio="none"
 				/>
-
 				<feDisplacementMap
 					in="SourceGraphic"
 					in2="turbulence"
