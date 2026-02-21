@@ -59,8 +59,8 @@ body {
 	top: 20px;
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
-	width: 1440px;
+	justify-content: center;
+	width: fit-content;
 	height: 80px;
 	border-radius: var(--radius-md);
 	z-index: 1000;
@@ -69,7 +69,7 @@ body {
 .header-liquid-fill {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: center;
 	width: 100%;
 	height: 78px;
 	padding: 0 20px;
@@ -91,28 +91,6 @@ body {
 
 .header-logo:hover {
 	letter-spacing: 2px;
-}
-
-.header-account {
-	display: inline-flex;
-	align-items: center;
-	height: 40px;
-	padding: 6px 18px;
-	border: 1px solid var(--border-soft);
-	border-radius: 14px;
-	background: var(--glass);
-	cursor: pointer;
-	transition: var(--transition);
-}
-
-.header-account span {
-	font-size: 24px;
-	color: #000;
-}
-
-.header-account:hover {
-	background-color: #fff;
-	transform: scale(1.02);
 }
 
 /* -------------------- Навигация -------------------- */
