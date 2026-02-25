@@ -1,0 +1,22 @@
+/* Кнопка добавления операций (плавающая) */
+.main-button {
+	position: fixed;
+	right: 20px;
+	bottom: 20px;
+	width: 60px;
+	height: 60px;
+	border: 1px solid var(--border);
+	border-radius: 16px;
+	background: var(--glass);
+	box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
+	color: #000;
+	font-size: 24px;
+	font-weight: 700;
+	cursor: pointer;
+	transition: var(--transition);
+}
+
+.main-button:hover {
+	background-color: #fff;
+	transform: scale(1.02);
+}
