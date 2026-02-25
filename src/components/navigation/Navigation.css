@@ -1,0 +1,40 @@
+/* -------------------- Навигация -------------------- */
+.nav {
+	display: flex;
+	height: 40px;
+}
+
+.nav-ul {
+	display: flex;
+	gap: 20px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.nav-ul-li button {
+	height: 40px;
+	border: none;
+	background: none;
+	cursor: pointer;
+	transition: var(--transition);
+}
+
+.nav-ul-li button span {
+	font-size: 24px;
+	font-weight: 700;
+	color: var(--text);
+	transition: var(--transition);
+}
+
+.nav-ul-li button:hover span {
+	color: var(--accent);
+}
+
+.nav-ul-li-active button {
+	border-bottom: 4px solid var(--accent);
+}
+
+.nav-ul-li-active button span {
+	color: var(--accent);
+}

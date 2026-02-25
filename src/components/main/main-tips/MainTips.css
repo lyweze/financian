@@ -1,0 +1,33 @@
+.main-chart-container h3,
+.main-tips-container h3 {
+	margin: 0;
+	color: var(--text);
+}
+
+/* Советы */
+.main-tips-container > ul {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin: 10px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.main-tips-container > ul > li {
+	padding: 10px;
+	border: 1px solid var(--border);
+	border-radius: var(--radius-md);
+	background: var(--glass);
+}
+
+.main-tips-container > ul > li p {
+	margin: 0 0 0 5px;
+	font-size: 16px;
+	font-weight: 700;
+	color: var(--text);
+}
+
+.main-tips-container > ul > li p span {
+	color: var(--text);
+}

@@ -1,0 +1,78 @@
+/* Цели */
+.main-goals-container {
+	gap: 10px;
+}
+
+.main-goals-container > p {
+	font-size: 16px;
+	font-weight: 700;
+	color: var(--muted);
+}
+
+.main-goals-container > ul {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.main-goals-container > ul > li {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px;
+	border: 1px solid var(--border-soft);
+	border-radius: 14px;
+	background: var(--glass);
+	color: #000;
+	font-size: 16px;
+	font-weight: 700;
+	transition: var(--transition);
+}
+
+.main-goals-container > ul > li:hover {
+	background-color: #fff;
+	transform: scale(1.02);
+	box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
+}
+
+.main-goals-container > ul > li:hover button {
+	opacity: 1;
+}
+
+.main-goals-container > ul > li h4 {
+	margin: 0;
+}
+
+.main-goals-container > ul > li button {
+	margin: 0;
+	padding: 0;
+	opacity: 0;
+	font-size: 16px;
+	font-weight: 700;
+	color: var(--muted);
+	transition: var(--transition);
+	cursor: pointer;
+	border: none;
+	background: none;
+}
+
+.main-goal-add-button {
+	padding: 8px;
+	border: 1px solid var(--border-soft);
+	border-radius: 14px;
+	background: var(--glass);
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+	color: #000;
+	font-size: 16px;
+	font-weight: 700;
+	cursor: pointer;
+	transition: var(--transition);
+}
+
+.main-goal-add-button:hover {
+	background-color: #fff;
+	transform: scale(1.02);
+}

@@ -1,0 +1,156 @@
+/* -------------------- Модалка: расходы -------------------- */
+.add-article {
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	backdrop-filter: blur(10px) brightness(1.05);
+	z-index: 1004;
+}
+
+.add-article > h2 {
+	margin: 0 0 10px;
+	font-weight: 700;
+	color: var(--text);
+}
+
+.add-article > div {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	gap: 20px;
+	padding: 20px;
+	border-radius: var(--radius-md);
+	background: #fff;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.add-article > div > ul {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.add-article > div > ul > li {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 10px;
+}
+
+.add-article > div > ul > li h3 {
+	margin: 0 0 0 5px;
+	color: var(--text);
+}
+
+.add-article > div > ul > li select,
+.add-article > div > ul > li input {
+	width: calc(100% - 20px);
+	padding: 10px;
+	border: 1px solid #26262611;
+	border-radius: 8px;
+	background-color: var(--glass);
+	font-size: 16px;
+	font-weight: 700;
+	outline: none;
+	transition: var(--transition);
+}
+
+.add-article > div > ul > li select:hover,
+.add-article > div > ul > li input:hover {
+	border-color: var(--accent);
+	box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
+}
+
+.add-article > div > ul > li select:focus,
+.add-article > div > ul > li input:focus {
+	border-color: var(--accent);
+	box-shadow: 0 0 5px rgba(40, 94, 89, 0.5);
+}
+
+.article-date-input-valid {
+	border-color: var(--accent);
+	color: var(--text);
+}
+
+.article-date-input-error {
+	color: red;
+}
+
+.add-article > div > ul > li select {
+	width: 100%;
+	appearance: none;
+}
+
+.add-article > div > ul > li select option {
+	padding: 10px;
+	border: 1px solid #26262611;
+	border-radius: 80px;
+	font-size: 16px;
+	transition: var(--transition);
+}
+
+.add-article > div > ul > li select option:hover {
+	border-color: var(--accent);
+	box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
+}
+
+.add-article > div > ul > li select option:focus {
+	border-color: var(--accent);
+	box-shadow: 0 0 5px rgba(40, 94, 89, 0.5);
+	outline: none;
+	background-color: #fff;
+}
+
+.add-article > div > div {
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+	width: 100%;
+}
+
+.add-article > div > div > button {
+	padding: 10px;
+	border: 1px solid var(--border-soft);
+	border-radius: 8px;
+	background: #fff;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+	font-size: 16px;
+	font-weight: 700;
+	cursor: pointer;
+	transition: var(--transition);
+	outline: none;
+}
+
+.add-article > div > div > button:hover,
+.add-article > div > div > button:focus {
+	border-color: var(--accent);
+	box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
+}
+
+.article-date-error-visible,
+.article-date-error {
+	margin: 0 0 0 5px;
+	font-size: 14px;
+	font-weight: 700;
+	color: red;
+	transition: var(--transition);
+}
+
+.article-date-error-visible {
+	opacity: 1;
+}
+
+.article-date-error {
+	opacity: 0;
+	margin-top: -20px;
+}
