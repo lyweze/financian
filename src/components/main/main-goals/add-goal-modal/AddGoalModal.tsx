@@ -2,6 +2,7 @@ import "./AddGoalModal.css";
 
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { normalizeGoalTitle } from "../../../../utils/utils";
+import { useLockBodyScroll } from "@custom-react-hooks/use-lock-body-scroll";
 
 // типы пропсов, которые принимает модалка
 type Props = {
@@ -20,10 +21,11 @@ function AddGoalModal({ isOpen, onClose, onSubmit }: Props) {
 	// при открытии модалки ставим фокус на инпут
 	useLayoutEffect(() => {
 		if (!isOpen) return;
-
 		const id = window.setTimeout(() => inputRef.current?.focus(), 0);
 		return () => window.clearTimeout(id);
 	}, [isOpen]);
+
+	useLockBodyScroll(isOpen); // блокируем прокрутку страницы
 
 	// слушатель клавиши Esc для закрытия
 	useEffect(() => {
@@ -83,6 +85,7 @@ function AddGoalModal({ isOpen, onClose, onSubmit }: Props) {
 					<li>
 						<h3>Название</h3>
 						<input
+							id="goal"
 							ref={inputRef}
 							type="text"
 							value={title}
