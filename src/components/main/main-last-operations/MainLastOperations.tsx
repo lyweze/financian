@@ -1,77 +1,106 @@
-import { useMemo, useState } from "react";
 import "./MainLastOperations.css";
 
-type Operation = {
-	id: string; // Уникальный идентификатор операции
-	title: string; // Название операции
-	amount: number; // Сумма операции
-	date: string; // Дата операции
-};
+import { useEffect, useMemo, useRef, useState } from "react";
+import { operationsCategories, type Operation } from "../../../store/Store";
+import { useStoreSnapshot } from "../../../store/useStoreSnapshot";
+import { formatAmount, parseMMDD } from "../../../utils/utils";
 
-type MainLastOperationsProps = {
-	operations?: Operation[]; // Список операций
-	initialCollapsed?: boolean; // Состояние свернутости по умолчанию
-	maxPreview?: number; // Максимум операций, отображаемых в свернутом состоянии
-};
+// svg лежат в public/assets/svg
+const imgPath = "/assets/svg";
 
-function MainLastOperations({
-	operations = [],
-	initialCollapsed = true,
-	maxPreview = 5,
-}: MainLastOperationsProps) {
-	const [collapsed, setCollapsed] = useState(initialCollapsed); // Состояние: свернуто/развернуто
+const categoryTitle = (category: Operation["category"]) =>
+	operationsCategories[category] ?? category;
 
-	// Вычисляем список отображаемых операций: либо обрезка, либо весь список
-	const visibleOperations = useMemo(
-		() => (collapsed ? operations.slice(0, maxPreview) : operations),
-		[collapsed, operations, maxPreview],
-	);
+export default function MainLastOperations() {
+	// 1) UI-состояние collapse должно быть локальным стейтом компонента (не в глобальном state)
+	const [isCollapsed, setIsCollapsed] = useState(true);
 
-	// Проверяем, есть ли больше операций, чем помещается в предпросмотр
-	const hasMore = operations.length > maxPreview;
+	// 2) Получаем данные так, чтобы компонент ре-рендерился при изменениях стора
+	const { allOperations } = useStoreSnapshot();
 
+	// 3) Сортировка без мутаций, с корректным парсингом "MM-DD"
+	const operationsSorted = useMemo(() => {
+		return [...allOperations].sort(
+			(a, b) => parseMMDD(b.date) - parseMMDD(a.date),
+		);
+	}, [allOperations]);
+
+	const collapseBtnRef = useRef<HTMLButtonElement | null>(null);
+
+	const containerClassName = [
+		"main-container",
+		"main-last-operations-container",
+		isCollapsed
+			? "last-operations-container-collapsed"
+			: "last-operations-container-opened",
+	].join(" ");
+
+	const listClassName = isCollapsed
+		? "main-last-operations-ul-collapsed"
+		: "main-last-operations-ul-opened";
+
+	const toggleCollapse = () => setIsCollapsed((v) => !v);
+
+	// 4) Скролл — через effect, без qs/addEventListener
+	useEffect(() => {
+		const btn = collapseBtnRef.current;
+		if (!btn) return;
+
+		const scrollTop = isCollapsed ? 0 : btn.offsetTop;
+		const delay = isCollapsed ? 0 : 300;
+
+		const id = window.setTimeout(() => {
+			window.scrollTo({ top: scrollTop, behavior: "smooth" });
+		}, delay);
+
+		return () => window.clearTimeout(id);
+	}, [isCollapsed]);
+
+	// 5) Пустое состояние без innerHTML
+	if (operationsSorted.length === 0) {
+		return (
+			<section
+				className={containerClassName}
+				aria-labelledby="last-ops-title"
+				style={{ justifyContent: "center", alignItems: "center" }}
+			>
+				<h3 id="last-ops-title">Последние операции</h3>
+				<p>Здесь пока нет операций</p>
+			</section>
+		);
+	}
+
+	// 6) Разметка соответствует твоему HTML: h3 -> ul -> button
 	return (
-		<section
-			className={`main-container main-last-operations-container ${
-				collapsed ? "last-operations-container-collapsed" : ""
-			}`}
-			aria-labelledby="last-ops-title"
-		>
+		<section className={containerClassName} aria-labelledby="last-ops-title">
 			<h3 id="last-ops-title">Последние операции</h3>
 
-			<ul
-				className={
-					collapsed
-						? "main-last-operations-ul-collapsed"
-						: "main-last-operations-ul"
-				}
-			>
-				{visibleOperations.length ? (
-					visibleOperations.map(({ id, title, amount, date }) => (
-						<li key={id} className="main-last-operations-item">
-							<span className="main-last-operations-title">{title}</span>
-							<span className="main-last-operations-amount">{amount}</span>
-							<span className="main-last-operations-date">{date}</span>
-						</li>
-					))
-				) : (
-					<li className="main-last-operations-empty">
-						<p>Нет операций</p>
+			<ul className={listClassName}>
+				{operationsSorted.map((op) => (
+					<li key={op.id}>
+						<div>
+							<div>
+								<img src={`${imgPath}/${op.category}.svg`} alt="" />
+								<p>{categoryTitle(op.category)}</p>
+							</div>
+
+							<p>
+								<span>{op.date}</span>
+								{formatAmount(op.amount)} ₽
+							</p>
+						</div>
 					</li>
-				)}
+				))}
 			</ul>
 
-			{hasMore && (
-				<button
-					type="button"
-					className="main-last-operation-collapse-button"
-					onClick={() => setCollapsed((prev) => !prev)}
-				>
-					{collapsed ? "Показать все" : "Скрыть"}
-				</button>
-			)}
+			<button
+				ref={collapseBtnRef}
+				type="button"
+				className="main-last-operation-collapse-button"
+				onClick={toggleCollapse}
+			>
+				{isCollapsed ? "Показать все" : "Скрыть"}
+			</button>
 		</section>
 	);
 }
-
-export default MainLastOperations;

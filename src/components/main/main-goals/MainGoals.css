@@ -32,6 +32,30 @@
 	transition: var(--transition);
 }
 
+.main-goals-container > ul > li input {
+	width: 90px;
+	padding: 5px;
+	border: 1px solid var(--primary);
+	border-radius: 4px;
+	background: var(--glass);
+	font-size: 16px;
+	font-weight: 700;
+	color: var(--text);
+	transition: var(--transition);
+}
+
+.main-goals-container > ul > li input:focus {
+	outline: 1px solid var(--primary);
+	border: 1px solid var(--primary);
+	box-shadow: 0 0 5px var(--primary);
+}
+
+.main-goals-container > ul > li input:hover {
+	outline: 1px solid var(--primary);
+	border: 1px solid var(--primary);
+	box-shadow: 0 0 5px var(--primary);
+}
+
 .main-goals-container > ul > li:hover {
 	background-color: #fff;
 	transform: scale(1.02);
@@ -72,7 +96,10 @@
 	transition: var(--transition);
 }
 
-.main-goal-add-button:hover {
-	background-color: #fff;
-	transform: scale(1.02);
+.main-goals-container > ul > li button:hover {
+	color: var(--primary);
+}
+
+.main-goals-container > ul > li.is-editing button {
+	opacity: 1;
 }

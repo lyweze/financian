@@ -5,29 +5,20 @@
 }
 
 /* Советы */
-.main-tips-container > ul {
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
-	margin: 10px 0 0;
-	padding: 0;
-	list-style: none;
-}
-
-.main-tips-container > ul > li {
+.main-tips-container p {
 	padding: 10px;
 	border: 1px solid var(--border);
 	border-radius: var(--radius-md);
 	background: var(--glass);
-}
-
-.main-tips-container > ul > li p {
-	margin: 0 0 0 5px;
+	margin-top: 10px;
 	font-size: 16px;
 	font-weight: 700;
 	color: var(--text);
-}
+	transition: var(--transition);
 
-.main-tips-container > ul > li p span {
-	color: var(--text);
+	&:hover {
+		background-color: #fff;
+		transform: scale(1.02);
+		box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
+	}
 }
