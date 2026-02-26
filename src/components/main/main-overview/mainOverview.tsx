@@ -4,20 +4,9 @@ import { formatAmount } from "../../../utils/utils";
 import { allOperations, allIncomes } from "../../../store/Store";
 import type { Operation, Income } from "../../../store/Store";
 
-type OverviewCardProps = {
-	className: string;
-	title: string;
-	value: number;
-	icon: ReactNode;
-};
-
-const OverviewCard = ({ className, title, value, icon }: OverviewCardProps) => (
-	<li className={className}>
-		{icon}
-		<h4>{title}</h4>
-		<p>{formatAmount(value)} ₽</p>
-	</li>
-);
+/* -------------------------------------------------------------------------- */
+/*                                  иконки                                      */
+/* -------------------------------------------------------------------------- */
 
 const WasteIcon = () => (
 	<svg
@@ -58,30 +47,77 @@ const PersonIcon = () => (
 	</svg>
 );
 
-export default function MainOverview() {
-	const { expenses, income, remainder } = useMemo(() => {
-		const expenses = allOperations.reduce(
-			(sum, op: Operation) => sum + op.amount,
-			0,
-		);
-		const income = allIncomes.reduce((sum, inc: Income) => sum + inc.amount, 0);
-		return { expenses, income, remainder: income - expenses };
-	}, [allOperations, allIncomes]);
+/* -------------------------------------------------------------------------- */
+/*                                  карта обзора                              */
+/* -------------------------------------------------------------------------- */
 
-	const cards = [
-		{
-			className: "overview-wastes",
-			title: "Расходы",
-			value: expenses,
-			icon: <WasteIcon />,
-		},
-		{
-			className: "overview-income",
-			title: "Доходы",
-			value: income,
-			icon: <IncomeIcon />,
-		},
-	];
+interface OverviewCardProps {
+	className: string;
+	title: string;
+	value: number;
+	icon: ReactNode;
+	onClick?: () => void;
+	animate?: boolean;
+}
+
+const OverviewCard: React.FC<OverviewCardProps> = ({
+	className,
+	title,
+	value,
+	icon,
+	onClick,
+	animate = false,
+}) => (
+	<li className={`${className} ${animate ? "animate" : ""}`} onClick={onClick}>
+		{icon}
+		<h4>{title}</h4>
+		<p>{formatAmount(value)} ₽</p>
+	</li>
+);
+
+/* -------------------------------------------------------------------------- */
+/*                     расчёт итогов и главный компонент                      */
+/* -------------------------------------------------------------------------- */
+
+type Totals = { expenses: number; income: number; remainder: number };
+
+const computeTotals = (): Totals => {
+	const expenses = allOperations.reduce(
+		(sum, op: Operation) => sum + op.amount,
+		0,
+	);
+	const income = allIncomes.reduce((sum, inc: Income) => sum + inc.amount, 0);
+	return { expenses, income, remainder: income - expenses };
+};
+
+interface MainOverviewProps {
+	onWasteClick: () => void;
+}
+
+function MainOverview({ onWasteClick }: MainOverviewProps) {
+	const { expenses, income, remainder } = useMemo(computeTotals, [
+		allOperations,
+		allIncomes,
+	]);
+
+	const cards: OverviewCardProps[] = useMemo(
+		() => [
+			{
+				className: "overview-wastes",
+				title: "Расходы",
+				value: expenses,
+				icon: <WasteIcon />,
+				onClick: onWasteClick,
+			},
+			{
+				className: "overview-income",
+				title: "Доходы",
+				value: income,
+				icon: <IncomeIcon />,
+			},
+		],
+		[expenses, income, onWasteClick],
+	);
 
 	return (
 		<section
@@ -108,3 +144,5 @@ export default function MainOverview() {
 		</section>
 	);
 }
+
+export default MainOverview;

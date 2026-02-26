@@ -1,4 +1,4 @@
-/* -------------------- Последние операции -------------------- */
+/* ---------- контейнер ---------- */
 .main-last-operations-container {
 	gap: 20px;
 	transition: var(--transition);
@@ -10,6 +10,7 @@
 	color: var(--text);
 }
 
+/* кнопка */
 .main-last-operations-container > button {
 	padding: 8px;
 	border: 1px solid var(--border-soft);
@@ -28,6 +29,7 @@
 	transform: scale(1.02);
 }
 
+/* список */
 .main-last-operations-container > ul {
 	display: flex;
 	flex-direction: column;
@@ -47,30 +49,36 @@
 	border-bottom: 2px solid #26262611;
 }
 
-.main-last-operations-container > ul > li > div {
+.main-last-operations-container > ul > li:last-child {
+	padding: 0;
+	border-bottom: none;
+}
+
+/* элемент операции */
+.main-last-operations-container li > div {
 	display: flex;
 	align-items: flex-end;
 	justify-content: space-between;
 }
 
-.main-last-operations-container > ul > li > div > div {
+.main-last-operations-container li > div > div {
 	display: flex;
 	align-items: flex-end;
 }
 
-.main-last-operations-container > ul > li > div > div img {
+.main-last-operations-container li img {
 	width: 25px;
 	height: 25px;
 }
 
-.main-last-operations-container > ul > li > div > div p {
+.main-last-operations-container li div > div p {
 	margin: 0 0 0 5px;
 	font-size: 16px;
 	font-weight: 700;
 	color: var(--text);
 }
 
-.main-last-operations-container > ul > li > div > p {
+.main-last-operations-container li div > p {
 	display: flex;
 	align-items: center;
 	margin: 0;
@@ -79,51 +87,13 @@
 	color: var(--accent);
 }
 
-.main-last-operations-container > ul > li > div > p span {
+.main-last-operations-container li div > p span {
 	margin-right: 5px;
 	font-size: 12px;
 	color: var(--text);
 }
 
-.main-last-operations-container > ul > li:last-child {
-	padding: 0;
-	border-bottom: none;
-}
-
-/* Состояния свернутого/развернутого списка */
-.last-operations-container-collapsed {
-	height: 30vh;
-	transition: var(--transition);
-}
-
-.last-operations-container-opened {
-	height: 100%;
-	transition: var(--transition);
-}
-
-.main-last-operations-ul-collapsed {
-	height: 30vh;
-	overflow-y: hidden;
-	transition: var(--transition);
-	-webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
-	mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
-}
-
-.main-last-operations-ul-opening {
-	height: 30vh;
-	overflow-y: visible;
-	-webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
-	mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
-}
-
-.main-last-operations-ul-opened {
-	height: 100%;
-	overflow-y: visible;
-	transition: var(--transition);
-	-webkit-mask-image: none;
-	mask-image: none;
-}
-
+/* пустой список */
 .main-last-operations-empty {
 	display: flex;
 	align-items: center;
@@ -132,4 +102,43 @@
 	font-size: 16px;
 	font-weight: 700;
 	color: var(--text);
+}
+
+/* состояние свернутого/развернутого списка */
+.last-operations-container-collapsed,
+.main-last-operations-ul-collapsed,
+.main-last-operations-ul-opening {
+	transition: var(--transition);
+}
+
+.last-operations-container-collapsed {
+	height: 30vh;
+}
+
+.last-operations-container-opened {
+	height: 100%;
+}
+
+.main-last-operations-ul-collapsed,
+.main-last-operations-ul-opening {
+	height: 30vh;
+	overflow-y: hidden;
+	-webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+	mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+}
+
+.main-last-operations-ul-opening {
+	overflow-y: visible;
+}
+
+.main-last-operations-ul-opened {
+	height: 100%;
+	overflow-y: visible;
+	-webkit-mask-image: none;
+	mask-image: none;
+}
+
+/* анимация */
+.pulse {
+	animation: pulse 0.5s ease;
 }
