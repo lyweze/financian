@@ -1,15 +1,25 @@
-import React from "react";
 import "./mainOverview.css";
+import { useMemo, type ReactNode } from "react";
+import { formatAmount } from "../../../utils/utils";
+import { allOperations, allIncomes } from "../../../store/Store";
+import type { Operation, Income } from "../../../store/Store";
 
-type OverviewItem = {
-	key: string; // уникальный ключ элемента списка
-	title: string; // заголовок карточки
-	ValueIcon: React.FC; // компонент иконки для значения
-	valueClassName: string; // CSS-класс для отображения значения
+type OverviewCardProps = {
+	className: string;
+	title: string;
+	value: number;
+	icon: ReactNode;
 };
 
-// Иконка расходов
-const WasteIcon: React.FC = () => (
+const OverviewCard = ({ className, title, value, icon }: OverviewCardProps) => (
+	<li className={className}>
+		{icon}
+		<h4>{title}</h4>
+		<p>{formatAmount(value)} ₽</p>
+	</li>
+);
+
+const WasteIcon = () => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		viewBox="0 0 640 640"
@@ -22,8 +32,7 @@ const WasteIcon: React.FC = () => (
 	</svg>
 );
 
-// Иконка доходов
-const IncomeIcon: React.FC = () => (
+const IncomeIcon = () => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		viewBox="0 0 640 640"
@@ -36,8 +45,7 @@ const IncomeIcon: React.FC = () => (
 	</svg>
 );
 
-// Иконка остатка средств
-const BalanceIcon: React.FC = () => (
+const PersonIcon = () => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		viewBox="0 0 640 640"
@@ -50,23 +58,31 @@ const BalanceIcon: React.FC = () => (
 	</svg>
 );
 
-// Константа с описанием карточек обзора
-const OVERVIEW_ITEMS: OverviewItem[] = [
-	{
-		key: "wastes",
-		title: "Расходы",
-		ValueIcon: WasteIcon,
-		valueClassName: "main-overview-wastes",
-	},
-	{
-		key: "income",
-		title: "Доходы",
-		ValueIcon: IncomeIcon,
-		valueClassName: "main-overview-income",
-	},
-];
+export default function MainOverview() {
+	const { expenses, income, remainder } = useMemo(() => {
+		const expenses = allOperations.reduce(
+			(sum, op: Operation) => sum + op.amount,
+			0,
+		);
+		const income = allIncomes.reduce((sum, inc: Income) => sum + inc.amount, 0);
+		return { expenses, income, remainder: income - expenses };
+	}, [allOperations, allIncomes]);
 
-function MainOverview() {
+	const cards = [
+		{
+			className: "overview-wastes",
+			title: "Расходы",
+			value: expenses,
+			icon: <WasteIcon />,
+		},
+		{
+			className: "overview-income",
+			title: "Доходы",
+			value: income,
+			icon: <IncomeIcon />,
+		},
+	];
+
 	return (
 		<section
 			className="main-container main-overview-container"
@@ -75,26 +91,20 @@ function MainOverview() {
 			<h3 id="overview-title">Быстрый обзор</h3>
 
 			<ul>
-				{/* Список карточек расходов/доходов */}
-				{OVERVIEW_ITEMS.map(({ key, title, ValueIcon, valueClassName }) => (
-					<li key={key} className={`overview-${key}`}>
-						<ValueIcon />
-						<h4>{title}</h4>
-						<p className={valueClassName} />
-					</li>
+				{cards.map((card) => (
+					<OverviewCard key={card.title} {...card} />
 				))}
 			</ul>
 
-			{/* Блок с остатком средств */}
 			<div>
-				<BalanceIcon />
+				<PersonIcon />
 				<p>
-					Остаток:
-					<span className="main-overview-remainder" />
+					Остаток:{" "}
+					<span className="main-overview-remainder">
+						{formatAmount(remainder)} ₽
+					</span>
 				</p>
 			</div>
 		</section>
 	);
 }
-
-export default MainOverview;

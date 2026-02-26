@@ -1,17 +1,28 @@
-import { memo } from "react";
+import { useCallback } from "react";
 import "./Header.css";
 import Liquid from "./liquid-effect/Liquid";
 
-// Компонент заголовка приложения
-const Header: React.FC = () => (
-	<header className="header">
-		{/* Блок с заливкой и названием приложения */}
-		<div className="header-liquid-fill">
-			<h1 className="header-logo">FINANCIAN</h1>
-		</div>
-		{/* Анимация жидкого эффекта */}
-		<Liquid />
-	</header>
-);
+const Header = () => {
+	const handleLogoClick = useCallback(() => {
+		if (window.location.pathname === "/") {
+			window.scrollTo({ top: 0, behavior: "smooth" });
+			return;
+		}
+		window.location.assign("/");
+	}, []);
 
-export default memo(Header);
+	return (
+		<header className="header">
+			<div
+				className="header-liquid-fill"
+				onClick={handleLogoClick}
+				aria-label="На главную"
+			>
+				<h1 className="header-logo">FINANCIAN</h1>
+			</div>
+			<Liquid />
+		</header>
+	);
+};
+
+export default Header;
