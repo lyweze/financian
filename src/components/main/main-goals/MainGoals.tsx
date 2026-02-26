@@ -1,6 +1,6 @@
 import "./MainGoals.css";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import {
 	addGoal,
 	removeGoal,
@@ -9,39 +9,41 @@ import {
 } from "../../../store/Store";
 import { useStoreSnapshot } from "../../../store/useStoreSnapshot";
 import { normalizeGoalTitle } from "../../../utils/utils";
-import AddGoalModal from "./AddGoalModal";
+import AddGoalModal from "./add-goal-modal/AddGoalModal";
 import { GoalItem } from "./GoalItem";
 
 export default function MainGoals() {
 	const { goals } = useStoreSnapshot();
 
-	const [isAddOpen, setIsAddOpen] = useState(false);
+	const [isAddOpen, setAddOpen] = useState(false);
 	const [editingId, setEditingId] = useState<number | null>(null);
 	const [draftTitle, setDraftTitle] = useState("");
 
-	const startEdit = (goal: Goal) => {
+	const startEdit = useCallback((goal: Goal) => {
 		setEditingId(goal.id);
 		setDraftTitle(goal.title);
-	};
+	}, []);
 
-	const cancelEdit = () => {
+	const cancelEdit = useCallback(() => {
 		setEditingId(null);
 		setDraftTitle("");
-	};
+	}, []);
 
-	const saveEdit = () => {
-		if (editingId === null) return;
+	const saveEdit = useCallback(() => {
+		if (editingId == null) return;
 		const res = normalizeGoalTitle(draftTitle);
 		if (!res.ok) return;
 		updateGoalTitle(editingId, res.title);
-		setEditingId(null);
-		setDraftTitle("");
-	};
+		cancelEdit();
+	}, [editingId, draftTitle, cancelEdit]);
 
-	const handleRemove = (goal: Goal) => {
-		if (editingId === goal.id) cancelEdit();
-		removeGoal(goal.id);
-	};
+	const handleRemove = useCallback(
+		(goal: Goal) => {
+			if (editingId === goal.id) cancelEdit();
+			removeGoal(goal.id);
+		},
+		[editingId, cancelEdit],
+	);
 
 	return (
 		<>
@@ -77,7 +79,7 @@ export default function MainGoals() {
 				<button
 					className="main-goal-add-button"
 					type="button"
-					onClick={() => setIsAddOpen(true)}
+					onClick={() => setAddOpen(true)}
 				>
 					Добавить цель
 				</button>
@@ -85,8 +87,8 @@ export default function MainGoals() {
 
 			<AddGoalModal
 				isOpen={isAddOpen}
-				onClose={() => setIsAddOpen(false)}
-				onSubmit={(title) => addGoal(title)}
+				onClose={() => setAddOpen(false)}
+				onSubmit={addGoal}
 			/>
 		</>
 	);
