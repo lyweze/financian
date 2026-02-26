@@ -1,19 +1,26 @@
-/* Модалка: добавить цель (отдельные классы, чтобы не зависеть от AddWaste.css) */
+/* add‑goal‑modal – отдельный блок, чтобы не пересекаться с AddWaste */
 .add-goal-modal {
 	position: fixed;
-	top: 0;
-	left: 0;
-
+	inset: 0; /* top/left/right/bottom = 0 */
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 
-	width: 100%;
-	height: 100%;
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
 
-	backdrop-filter: blur(10px) brightness(1.05);
 	z-index: 1004;
+	backdrop-filter: blur(10px) brightness(1.05);
+	transition: var(--transition);
+}
+
+.add-goal-modal--open {
+	opacity: 1;
+	visibility: visible;
+	pointer-events: auto;
+	transform: translateY(0);
 }
 
 .add-goal-modal > h2 {
@@ -30,56 +37,50 @@
 
 	gap: 20px;
 	padding: 20px;
-
 	border-radius: var(--radius-md);
 	background: #fff;
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
-.add-goal-modal__content > ul {
+/* списки внутри контента */
+.add-goal-modal__content ul {
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
-
 	margin: 0;
 	padding: 0;
 	list-style: none;
 }
 
-.add-goal-modal__content > ul > li {
+.add-goal-modal__content li {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
 	gap: 10px;
 }
 
-.add-goal-modal__content > ul > li h3 {
+.add-goal-modal__content h3 {
 	margin: 0 0 0 5px;
 	color: var(--text);
 }
 
-.add-goal-modal__content > ul > li input {
+.add-goal-modal__content input {
 	width: calc(100% - 20px);
 	padding: 10px;
-
 	border: 1px solid #26262611;
 	border-radius: 8px;
-
 	background-color: var(--glass);
-	font-size: 16px;
-	font-weight: 700;
-
+	font: 700 16px/1 sans-serif;
 	outline: none;
 	transition: var(--transition);
 }
 
-.add-goal-modal__content > ul > li input:hover {
+.add-goal-modal__content input:is(:hover, :focus) {
 	border-color: var(--accent);
 	box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
 }
 
-.add-goal-modal__content > ul > li input:focus {
-	border-color: var(--accent);
+.add-goal-modal__content input:focus {
 	box-shadow: 0 0 5px rgba(40, 94, 89, 0.5);
 }
 
@@ -90,44 +91,38 @@
 	width: 100%;
 }
 
-.add-goal-modal__buttons > button {
+.add-goal-modal__buttons button {
 	padding: 10px;
-
 	border: 1px solid var(--border-soft);
 	border-radius: 8px;
-
 	background: #fff;
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-
-	font-size: 16px;
-	font-weight: 700;
-
+	font: 700 16px/1 sans-serif;
 	cursor: pointer;
 	transition: var(--transition);
 	outline: none;
 }
 
-.add-goal-modal__buttons > button:hover,
-.add-goal-modal__buttons > button:focus {
+.add-goal-modal__buttons button:is(:hover, :focus) {
 	border-color: var(--accent);
 	box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Ошибка/подсказка */
-.add-goal-modal__error,
-.add-goal-modal__error--visible {
+/* ошибка/подсказка */
+.add-goal-modal__error {
 	margin: 0 0 0 5px;
-	font-size: 14px;
-	font-weight: 700;
+	font: 700 14px/1 sans-serif;
 	color: red;
+	opacity: 0;
+	margin-top: -20px;
 	transition: var(--transition);
 }
 
-.add-goal-modal__error {
-	opacity: 0;
-	margin-top: -20px;
-}
-
 .add-goal-modal__error--visible {
+	margin: 0 0 0 5px;
+	font: 700 14px/1 sans-serif;
+	color: red;
+	opacity: 0;
+	transition: var(--transition);
 	opacity: 1;
 }
