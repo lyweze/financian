@@ -95,6 +95,10 @@
 	cursor: pointer;
 	transition: var(--transition);
 }
+.main-goal-add-button:hover {
+	background-color: #fff;
+	transform: scale(1.02);
+}
 
 .main-goals-container > ul > li button:hover {
 	color: var(--primary);
