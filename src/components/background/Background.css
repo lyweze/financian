@@ -1,0 +1,21 @@
+.background {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	/* object-fit: cover; */
+	/* filter: invert(1); */
+    animation: Govno 10s infinite ease-in-out;
+	z-index: -10;
+}
+
+@keyframes Govno{
+    0%, 100% {
+        filter: invert(0);
+    }
+    50% {
+        filter: invert(1);
+        transform: scaleX(1.5) rotateX(120deg);
+    }
+}

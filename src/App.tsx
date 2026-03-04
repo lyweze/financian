@@ -1,6 +1,7 @@
 import Header from "./components/header/Header";
 import Navigation from "./components/navigation/Navigation";
 import MainPage from "./components/main/MainPage";
+import Background from "./components/background/Background";
 import "./App.css";
 
 const App = () => (
@@ -8,6 +9,7 @@ const App = () => (
 		<Header />
 		<Navigation />
 		<MainPage />
+		<Background />
 	</div>
 );
 
