@@ -46,6 +46,8 @@ export const operationsCategories: Record<OperationCategory, string> = {
 const OPS_KEY = "allOperations";
 const INCS_KEY = "allIncomes";
 const GOALS_KEY = "allGoals";
+const LAST_OPS_KEY = "lastOperations";
+const LAST_OPS_COUNT = 5;
 
 function loadFromLS<T>(key: string, fallback: T): T {
 	try {
@@ -64,6 +66,34 @@ function saveToLS<T>(key: string, value: T): void {
 	} catch (e) {
 		console.log(`saveToLS error for key ${key}:`, e);
 	}
+}
+
+// --- Последние операции ---
+function loadLastOperations(): Operation[] {
+	try {
+		const raw = localStorage.getItem(LAST_OPS_KEY);
+		return raw ? JSON.parse(raw) : [];
+	} catch {
+		console.log("[loadLastOperations] error");
+		return [];
+	}
+}
+function saveLastOperations(ops: Operation[]) {
+	try {
+		localStorage.setItem(LAST_OPS_KEY, JSON.stringify(ops));
+		console.log("[saveLastOperations]", ops);
+	} catch (e) {
+		console.log("[saveLastOperations] error:", e);
+	}
+}
+export function updateLastOperations() {
+	const sortedOps = [...allOperations].sort((a, b) => b.id - a.id);
+	const lastOps = sortedOps.slice(0, LAST_OPS_COUNT);
+	saveLastOperations(lastOps);
+	console.log("[updateLastOperations]", lastOps);
+}
+export function getLastOperations(): Operation[] {
+	return loadLastOperations();
 }
 
 // --- Данные (с примерами) ---
@@ -162,6 +192,7 @@ export const addOperation = (op: Operation): void => {
 	}
 	allOperations.push(op);
 	saveToLS(OPS_KEY, allOperations);
+	updateLastOperations();
 	console.log("[addOperation]", op);
 	notify();
 };
@@ -173,6 +204,7 @@ export const editOperation = (id: number, patch: Partial<Operation>): void => {
 	}
 	Object.assign(op, patch);
 	saveToLS(OPS_KEY, allOperations);
+	updateLastOperations();
 	console.log("[editOperation]", op);
 	notify();
 };
@@ -184,6 +216,7 @@ export const removeOperation = (id: number): void => {
 	}
 	allOperations.splice(idx, 1);
 	saveToLS(OPS_KEY, allOperations);
+	updateLastOperations();
 	console.log("[removeOperation] id =", id);
 	notify();
 };
@@ -280,6 +313,7 @@ export const importData = (data: string): void => {
 			allOperations.length = 0;
 			allOperations.push(...ops);
 			saveToLS(OPS_KEY, allOperations);
+			updateLastOperations();
 		}
 		if (Array.isArray(incs)) {
 			allIncomes.length = 0;
@@ -305,6 +339,7 @@ export const clearAll = () => {
 	saveToLS(OPS_KEY, allOperations);
 	saveToLS(INCS_KEY, allIncomes);
 	saveToLS(GOALS_KEY, goals);
+	updateLastOperations();
 	console.log("[clearAll] Store cleared");
 	notify();
 };
@@ -313,13 +348,14 @@ export const resetStore = () => {
 	localStorage.removeItem(OPS_KEY);
 	localStorage.removeItem(INCS_KEY);
 	localStorage.removeItem(GOALS_KEY);
+	localStorage.removeItem(LAST_OPS_KEY);
 	console.log("[resetStore] localStorage keys removed");
 	window.location.reload();
 };
 
 // --- Поддержка синхронизации между вкладками ---
 window.addEventListener("storage", (e) => {
-	if ([OPS_KEY, INCS_KEY, GOALS_KEY].includes(e.key || "")) {
+	if ([OPS_KEY, INCS_KEY, GOALS_KEY, LAST_OPS_KEY].includes(e.key || "")) {
 		console.log(
 			"[storage event]:",
 			e.key,
@@ -329,6 +365,7 @@ window.addEventListener("storage", (e) => {
 			const ops = loadFromLS<Operation[]>(OPS_KEY, []);
 			allOperations.length = 0;
 			allOperations.push(...ops);
+			updateLastOperations();
 		}
 		if (e.key === INCS_KEY) {
 			const incs = loadFromLS<Income[]>(INCS_KEY, []);
